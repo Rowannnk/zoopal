@@ -60,7 +60,7 @@ const Navbar = () => {
           <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-md z-30">
             <ul className="p-2">
               <li className="py-2 hover:bg-gray-100 text-center">
-                <a href="#">Profile</a>
+                <Link href="/Profile">Profile</Link>
               </li>
               <li className="py-2 hover:bg-gray-100 text-center">
                 <a href="#">Check your Pals</a>
