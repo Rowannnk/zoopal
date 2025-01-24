@@ -1,6 +1,8 @@
-import Image from "next/image";
-import { FaPaw } from "react-icons/fa"; // Importing an icon for the buttons
+"use client";
 
+import Image from "next/image";
+import { FaPaw } from "react-icons/fa";
+import Link from "next/link";
 const HeroSection = () => {
   return (
     <div className="relative bg-gradient-to-br from-[#f4f2fa] via-white to-[#eae6f8] w-full p-10 h-screen overflow-hidden">
@@ -42,14 +44,22 @@ const HeroSection = () => {
             friend is waiting to meet you!
           </p>
           <div className="flex flex-wrap justify-center md:justify-start gap-4">
-            <button className="flex items-center px-8 py-3 bg-[#5f4fa8] text-white rounded-full shadow-lg hover:bg-[#504394] hover:shadow-2xl transition-all focus:ring-4 focus:ring-[#5f4fa8]/50">
+            {" "}
+            {/* Link to the adoption page */}
+            <Link
+              href="/Adoption"
+              className="flex items-center px-8 py-3 bg-[#5f4fa8] text-white rounded-full shadow-lg hover:bg-[#504394] hover:shadow-2xl transition-all focus:ring-4 focus:ring-[#5f4fa8]/50"
+            >
               <FaPaw className="mr-2" />
               Adopt a Zoo Pal
-            </button>
-            <button className="flex items-center px-8 py-3 bg-white text-[#5f4fa8] border border-[#5f4fa8] rounded-full shadow-lg hover:bg-[#f4f2fa] hover:shadow-2xl transition-all focus:ring-4 focus:ring-[#5f4fa8]/50">
+            </Link>
+            <Link
+              href="/Appointment"
+              className="flex items-center px-8 py-3 bg-white text-[#5f4fa8] border border-[#5f4fa8] rounded-full shadow-lg hover:bg-[#f4f2fa] hover:shadow-2xl transition-all focus:ring-4 focus:ring-[#5f4fa8]/50"
+            >
               <FaPaw className="mr-2" />
               Make an appointment with your Pal
-            </button>
+            </Link>
           </div>
         </div>
       </div>
