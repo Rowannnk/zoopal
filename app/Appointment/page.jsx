@@ -1,9 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
-import { FaDog, FaCat, FaHorse, FaFish, FaArrowDown } from "react-icons/fa";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import Image from "next/image";
 
 const Appointment = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -24,6 +24,45 @@ const Appointment = () => {
       })
     : "";
 
+  const animals = [
+    {
+      id: 1,
+      species: "Panthera uncia",
+      commonName: "Snow Leopard",
+      imageUrl: "/images/pet1.jpg",
+    },
+    {
+      id: 2,
+      species: "Loxodonta africana",
+      commonName: "African Elephant",
+      imageUrl: "/images/pet2.jpg",
+    },
+    {
+      id: 3,
+      species: "Ailurus fulgens",
+      commonName: "Red Panda",
+      imageUrl: "/images/pet3.jpg",
+    },
+    {
+      id: 4,
+      species: "Panthera tigris",
+      commonName: "Bengal Tiger",
+      imageUrl: "/images/pet4.jpg",
+    },
+    {
+      id: 5,
+      species: "Panthera leo",
+      commonName: "Lion",
+      imageUrl: "/images/pet5.jpg",
+    },
+    {
+      id: 6,
+      species: "Elephas maximus",
+      commonName: "Asian Elephant",
+      imageUrl: "/images/pet6.jpg",
+    },
+  ];
+
   return (
     <>
       <Navbar />
@@ -39,7 +78,6 @@ const Appointment = () => {
             time with your new pal, we’ve made it easy to schedule an
             unforgettable experience.
           </p>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 text-left">
             <div>
               <h2 className="text-xl font-semibold mb-3">
@@ -91,11 +129,9 @@ const Appointment = () => {
           </div>
         </div>
 
-        {/* Modal */}
         {isModalOpen && (
           <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50">
             <div className="bg-white p-8 rounded-2xl shadow-xl w-[600px]">
-              {/* Header */}
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-semibold text-gray-800">
                   Schedule an Appointment
@@ -107,56 +143,45 @@ const Appointment = () => {
                   ✖
                 </button>
               </div>
-
-              {/* Modal Content - Two Columns */}
               <div className="grid grid-cols-2 gap-6">
-                {/* Left Column: Animal Selection */}
                 <div>
-                  <h3 className="text-lg font-medium mb-3 text-white bg-[#7b6fb1] px-4 py-2 rounded-md text-center">
+                  <h3 className="text-lg font-medium mb-3 text-white bg-[#7b6fb1] px-4 py-4 rounded-full text-center">
                     Choose A Pal
                   </h3>
-
-                  <div className="grid grid-cols-1 gap-4">
-                    {[
-                      { name: "Dog", icon: FaDog },
-                      { name: "Cat", icon: FaCat },
-                      { name: "Horse", icon: FaHorse },
-                      { name: "Fish", icon: FaFish },
-                    ].map(({ name, icon: Icon }) => (
-                      <button
-                        key={name}
-                        className={`flex flex-col items-center justify-center p-3 border rounded-lg transition ${
-                          selectedAnimal === name
-                            ? "border-[#7b6fb1] bg-[#f4f2fa] text-[#7b6fb1]"
-                            : "border-gray-300 text-gray-700 hover:border-[#7b6fb1]"
-                        }`}
-                        onClick={() => setSelectedAnimal(name)}
-                      >
-                        <div className="flex gap-5">
-                          <Icon size={32} />
-                          <span className="mt-2">{name}</span>
-                        </div>
-                      </button>
-                    ))}
+                  <div className="h-60 overflow-y-auto">
+                    {" "}
+                    <div className="grid grid-cols-1 gap-4">
+                      {animals.map((animal) => (
+                        <button
+                          key={animal.id}
+                          className={`flex items-center gap-4 p-3 border rounded-lg transition ${
+                            selectedAnimal === animal.commonName
+                              ? "border-[#7b6fb1] bg-[#f4f2fa] text-[#7b6fb1]"
+                              : "border-gray-300 text-gray-700 hover:border-[#7b6fb1]"
+                          }`}
+                          onClick={() => setSelectedAnimal(animal.commonName)}
+                        >
+                          <Image
+                            src={animal.imageUrl}
+                            alt={animal.commonName}
+                            width={80} // 12 * 4 for responsiveness (can adjust as needed)
+                            height={80} // 12 * 4 for responsiveness (can adjust as needed)
+                            className="rounded-md"
+                          />
+                          <span>{animal.commonName}</span>
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
-
-                {/* Right Column: Date Selection */}
                 <div>
-                  <h3 className="text-lg font-medium mb-3 text-white bg-[#7b6fb1] px-4 py-2 rounded-md text-center">
+                  <h3 className="text-lg font-medium mb-3 text-white bg-[#7b6fb1] px-4 py-4 rounded-full text-center">
                     Pick A Date
                   </h3>
-                  {/* <input
-                    type="date"
-                    className="w-full p-3 border rounded-lg text-gray-700 bg-gray-100 outline-none focus:border-[#7b6fb1]"
-                    value={selectedDate}
-                    onChange={(e) => setSelectedDate(e.target.value)}
-                  /> */}
                   <Calendar value={selectedDate} onChange={handleDateChange} />
                 </div>
               </div>
 
-              {/* Modal Footer */}
               <div className="mt-6 flex justify-end gap-3">
                 <button
                   className="px-5 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition"
@@ -164,7 +189,6 @@ const Appointment = () => {
                 >
                   Cancel
                 </button>
-
                 <button
                   className="px-5 py-2 text-white bg-[#7b6fb1] rounded-lg hover:bg-[#6a5fb1] transition"
                   onClick={() => {
@@ -178,7 +202,7 @@ const Appointment = () => {
                     }
                   }}
                 >
-                  Confirm
+                  Book Now
                 </button>
               </div>
             </div>

@@ -3,135 +3,196 @@ import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import Image from "next/image";
 import Link from "next/link";
+import { FaSort, FaFilter, FaSearch } from "react-icons/fa"; // Importing icons
 
 const Adoption = () => {
   const animals = [
     {
       id: 1,
-      name: "Mrs. Zara",
       species: "Panthera uncia",
       commonName: "Snow Leopard",
+      age: 5,
+      adoptionStatus: "Endangered",
       imageUrl: "/images/pet1.jpg",
     },
     {
       id: 2,
-      name: "Mr. Max",
       species: "Loxodonta africana",
       commonName: "African Elephant",
+      age: 10,
+      adoptionStatus: "No Adoptive Owner",
       imageUrl: "/images/pet2.jpg",
     },
     {
       id: 3,
-      name: "Ms. Mei",
       species: "Ailurus fulgens",
       commonName: "Red Panda",
+      age: 3,
+      adoptionStatus: "Moderately Concerned",
       imageUrl: "/images/pet3.jpg",
     },
     {
       id: 4,
-      name: "Ms. Ming",
       species: "Panthera tigris",
       commonName: "Bengal Tiger",
+      age: 7,
+      adoptionStatus: "Endangered",
       imageUrl: "/images/pet4.jpg",
     },
     {
       id: 5,
-      name: "Mr. Leo",
       species: "Panthera leo",
       commonName: "Lion",
+      age: 8,
+      adoptionStatus: "No Adoptive Owner",
       imageUrl: "/images/pet5.jpg",
     },
     {
       id: 6,
-      name: "Ms. Ella",
       species: "Elephas maximus",
       commonName: "Asian Elephant",
+      age: 6,
+      adoptionStatus: "Moderately Concerned",
       imageUrl: "/images/pet6.jpg",
     },
   ];
 
-  const [selectedSpecies, setSelectedSpecies] = useState("All");
+  const [sortOption, setSortOption] = useState("");
+  const [filterOption, setFilterOption] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const handleSpeciesFilter = (species) => {
-    setSelectedSpecies(species);
+  const handleSort = (event) => {
+    setSortOption(event.target.value);
   };
 
-  const filteredAnimals =
-    selectedSpecies === "All"
-      ? animals
-      : animals.filter((animal) => animal.species === selectedSpecies);
+  const handleFilter = (event) => {
+    setFilterOption(event.target.value);
+  };
 
-  const speciesList = [
-    "All",
-    ...new Set(animals.map((animal) => animal.species)),
-  ];
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const getSortedAnimals = (animalsList) => {
+    switch (sortOption) {
+      case "name-asc":
+        return [...animalsList].sort((a, b) => a.name.localeCompare(b.name));
+      case "name-desc":
+        return [...animalsList].sort((a, b) => b.name.localeCompare(a.name));
+      case "age-asc":
+        return [...animalsList].sort((a, b) => a.age - b.age);
+      case "age-desc":
+        return [...animalsList].sort((a, b) => b.age - a.age);
+      default:
+        return animalsList;
+    }
+  };
+
+  const filteredAnimals = animals
+    .filter(
+      (animal) =>
+        filterOption === "All" || animal.adoptionStatus === filterOption
+    )
+    .filter((animal) =>
+      animal.commonName.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+  const sortedAnimals = getSortedAnimals(filteredAnimals);
 
   return (
     <>
       <Navbar />
       <div className="bg-gradient-to-br from-[#f4f2fa] via-white to-[#eae6f8] w-full min-h-screen py-10">
         <div className="max-w-screen-xl mx-auto text-center">
-          {/* Header */}
           <h1 className="text-4xl font-bold text-[#7b6fb1] mb-4">
             Meet Today&apos;s Zoo Pals Waiting for You!
           </h1>
           <p className="text-gray-700 mb-8">
             Looking for a new friend? Check out today’s hand-picked animals that
-            are waiting for your love and support! Every adoption makes a real
-            impact — from feeding to donations, your support helps these amazing
-            creatures thrive.
+            are waiting for your love and support!
           </p>
 
-          {/* Species Scroll Bar */}
-          <div className="flex overflow-x-scroll gap-4 px-4 pb-4 scrollbar-hide">
-            {speciesList.map((species, index) => (
-              <button
-                key={index}
-                onClick={() => handleSpeciesFilter(species)}
-                className={`px-6 py-3 rounded-full whitespace-nowrap ${
-                  selectedSpecies === species
-                    ? "bg-[#7b6fb1] text-white"
-                    : "bg-gray-200 text-gray-800"
-                } hover:bg-[#504394] hover:text-white transition-all`}
+          {/* Filters Row */}
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-6">
+            {/* Sort By */}
+            <div className="relative">
+              <select
+                value={sortOption}
+                onChange={handleSort}
+                className="px-4 py-2 border border-gray-300 rounded-md text-gray-800 pl-10"
               >
-                {species}
-              </button>
-            ))}
+                <option value="">Sort By</option>
+                <option value="name-asc">Name (A-Z)</option>
+                <option value="name-desc">Name (Z-A)</option>
+                <option value="age-asc">Age (Ascending)</option>
+                <option value="age-desc">Age (Descending)</option>
+              </select>
+              <FaSort className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+            </div>
+
+            {/* Filter By */}
+            <div className="relative">
+              <select
+                value={filterOption}
+                onChange={handleFilter}
+                className="px-4 py-2 border border-gray-300 rounded-md text-gray-800 pl-10"
+              >
+                <option value="All">Filter By</option>
+                <option value="No Adoptive Owner">No Adoptive Owner</option>
+                <option value="Endangered">Endangered Species</option>
+                <option value="Moderately Concerned">
+                  Moderately Concerned Species
+                </option>
+              </select>
+              <FaFilter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+            </div>
+
+            {/* Search Bar */}
+            <div className="relative flex items-center border border-gray-300 rounded-md px-4 py-2">
+              <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={handleSearch}
+                placeholder="Search by name..."
+                className="ml-10 outline-none text-gray-800"
+              />
+            </div>
           </div>
 
           {/* Animal Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-            {filteredAnimals.map((animal) => (
-              <div
-                key={animal.id}
-                className="bg-white rounded-lg p-6 flex flex-col items-center text-center border border-gray-200"
-              >
-                <div className="bg-gray-100 h-56 w-full rounded-md flex justify-center items-center mb-4">
-                  <Image
-                    src={animal.imageUrl}
-                    alt={animal.commonName}
-                    width={500}
-                    height={500}
-                    className="rounded-3xl w-full h-full object-cover"
-                  />
-                </div>
-                <h2 className="text-lg font-semibold text-gray-800">
-                  {animal.name}
-                </h2>
-                <p className="text-gray-500">
-                  Species: <span className="italic">{animal.species}</span>
-                </p>
-                <p className="text-gray-500">
-                  Common Name: {animal.commonName}
-                </p>
-                <Link
-                  href={`/pets/${animal.id}`}
-                  className="mt-4 text-[#7b6fb1] hover:text-[#504394] transition-all flex items-center gap-1"
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+            {sortedAnimals.length > 0 ? (
+              sortedAnimals.map((animal) => (
+                <div
+                  key={animal.id}
+                  className="relative w-70 rounded-lg overflow-hidden shadow-lg border border-gray-200"
                 >
-                  More Details →
-                </Link>
-              </div>
-            ))}
+                  <div className="h-64">
+                    <Image
+                      src={animal.imageUrl}
+                      alt={animal.commonName}
+                      width={500}
+                      height={500}
+                      className="object-cover w-full h-full"
+                    />
+                  </div>
+                  <div className="absolute bottom-2 left-2 right-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-2 flex justify-between items-center">
+                    <p className="text-xs text-white/80">{animal.commonName}</p>
+                    <Link
+                      href={`/pets/${animal.id}`}
+                      className="text-xs text-white bg-black/20 px-3 py-1 rounded-lg"
+                    >
+                      More Info
+                    </Link>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p className="col-span-3 text-gray-600 text-lg">
+                No animals match your criteria.
+              </p>
+            )}
           </div>
         </div>
       </div>

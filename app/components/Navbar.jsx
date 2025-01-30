@@ -63,10 +63,10 @@ const Navbar = () => {
                 <Link href="/Profile">Profile</Link>
               </li>
               <li className="py-2 hover:bg-gray-100 text-center">
-                <a href="#">Check your Pals</a>
+                <Link href="/MyPal">Check your Pals</Link>
               </li>
               <li className="py-2 hover:bg-gray-100 text-center">
-                <a href="#">Appointments</a>
+                <Link href="/MyAppointment">Appointments</Link>
               </li>
             </ul>
             <button className="block w-full py-2 text-center bg-[#7b6fb1] text-white rounded-lg hover:bg-[#504394] hover:shadow-2xl transition-all">
