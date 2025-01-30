@@ -1,6 +1,7 @@
 "use client";
 
 import Navbar from "@/app/components/Navbar";
+import Image from "next/image";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 
@@ -134,7 +135,9 @@ export default function UserList() {
                   key={index}
                   className="bg-gray-100 p-4 rounded-xl flex flex-col items-center"
                 >
-                  <img
+                  <Image
+                    width={300}
+                    height={176}
                     src={animal.image}
                     alt={animal.name}
                     className="w-full h-44 object-cover rounded"

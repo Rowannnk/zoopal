@@ -59,7 +59,7 @@ const MyPal = () => {
             At AdoptAZooPal.com, we believe in connecting our adopters with the
             animals they support. Whether here to meet your adopted animal up
             close, take a behind-the-scenes tour, or just spend some quality
-            time with your new pal, we’ve made it easy to schedule an
+            time with your new pal, we have made it easy to schedule an
             unforgettable experience.
           </p>
         </div>
@@ -94,10 +94,12 @@ const MyPal = () => {
 
               {/* Card Image */}
               <div className="relative h-60 m-2.5 overflow-hidden text-white rounded-md">
-                <img
+                <Image
+                  width={300}
+                  height={200}
                   src={animal.imageUrl}
-                  alt={animal.name}
-                  className="object-cover w-full h-full rounded-md transition-transform duration-300 transform hover:scale-110"
+                  alt="animal image"
+                  className="object-contain w-full  rounded-md transition-transform duration-300 transform hover:scale-110"
                 />
               </div>
             </div>
@@ -112,9 +114,7 @@ const MyPal = () => {
               <button
                 onClick={handleCloseModal}
                 className="absolute top-3 right-3 text-gray-400 hover:text-gray-600"
-              >
-                ×
-              </button>
+              ></button>
 
               {/* Header */}
               <h3 className="text-2xl font-semibold text-center mb-6">
@@ -127,7 +127,7 @@ const MyPal = () => {
                 <div className="sm:w-1/2 flex justify-center items-center mb-4 sm:mb-0">
                   <Image
                     src={selectedAnimal.imageUrl || "/placeholder-image.png"}
-                    alt={`${selectedAnimal.commonName}'s latest photo`}
+                    alt={`animal's latest photo`}
                     width={300}
                     height={300}
                     className="rounded-lg shadow-md object-cover"

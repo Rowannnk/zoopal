@@ -1,5 +1,6 @@
 "use client";
 import Navbar from "@/app/components/Navbar";
+import Image from "next/image";
 import React, { useState } from "react";
 import { FaPaw } from "react-icons/fa";
 
@@ -8,26 +9,22 @@ const LogIn = () => {
   const [password, setPassword] = useState("");
 
   const handleRegisterRedirect = () => {
-    window.location.href = "/auth/register"; // Change to the registration page
+    window.location.href = "/auth/register";
   };
 
   const handleLogin = (e) => {
     e.preventDefault();
 
-    // Retrieve the users array from localStorage
     const users = JSON.parse(localStorage.getItem("users")) || [];
 
-    // Find the user with the matching email and password
     const user = users.find(
       (u) => u.email === email && u.password === password
     );
 
     if (user) {
-      // Login successful
       alert("Login successful!");
-      window.location.href = "/"; // Redirect to home page or dashboard
+      window.location.href = "/";
     } else {
-      // Login failed
       alert("Invalid email or password");
     }
   };
@@ -79,7 +76,7 @@ const LogIn = () => {
             </div>
 
             <div className="mt-3 text-xs flex justify-between items-center text-[#7b6fb1]">
-              <p>Don't have an account?</p>
+              <p>Dont have an account?</p>
               <button
                 onClick={handleRegisterRedirect}
                 className="py-2 px-5 bg-white border rounded-xl hover:scale-110 duration-300"
@@ -90,9 +87,12 @@ const LogIn = () => {
           </div>
 
           <div className="md:block hidden w-1/2 ">
-            <img
+            <Image
+              width={612}
+              height={500}
               className="rounded-2xl h-[500px] w-full object-cover "
-              src="https://images.unsplash.com/photo-1504173010664-32509aeebb62?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHdpbGQlMjBhbmltYWxzfGVufDB8fDB8fHww"
+              src="/images/login_image.jpeg"
+              alt="Login Image"
             />
           </div>
         </div>

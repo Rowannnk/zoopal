@@ -1,5 +1,6 @@
 "use client";
 import Navbar from "@/app/components/Navbar";
+import Image from "next/image";
 import React, { useState } from "react";
 import { FaPaw } from "react-icons/fa";
 
@@ -122,10 +123,13 @@ const Register = () => {
             </div>
           </div>
 
-          <div className="md:block hidden w-1/2 ">
-            <img
-              className="rounded-2xl h-[500px] w-full object-cover "
-              src="https://media.istockphoto.com/id/1194518176/photo/big-family-in-the-forest.jpg?s=612x612&w=0&k=20&c=T3yCdmoaWApetlBFmzJOZyycjcKjKlsx9-sBjnKk7Lk="
+          <div className="md:block hidden w-1/2">
+            <Image
+              width={612}
+              height={500}
+              alt="Register Image"
+              className="rounded-2xl h-[500px] w-full object-cover"
+              src="/images/register_image.jpg"
             />
           </div>
         </div>

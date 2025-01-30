@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
+import Image from "next/image";
 
 export default function AppointmentCard() {
   const [appointments, setAppointments] = useState([
@@ -76,7 +77,7 @@ export default function AppointmentCard() {
             At AdoptAZooPal.com, we believe in connecting our adopters with the
             animals they support. Whether here to meet your adopted animal up
             close, take a behind-the-scenes tour, or just spend some quality
-            time with your new pal, we’ve made it easy to schedule an
+            time with your new pal, we have made it easy to schedule an
             unforgettable experience.
           </p>
         </div>
@@ -91,9 +92,11 @@ export default function AppointmentCard() {
               <div className="flex justify-between items-center p-4 border-b border-gray-200">
                 <div className="flex items-center gap-4">
                   <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-purple-500">
-                    <img
+                    <Image
                       src={appointment.imageUrl}
                       alt={appointment.animal}
+                      width={300}
+                      height={200}
                       className="w-full h-full object-cover"
                     />
                   </div>

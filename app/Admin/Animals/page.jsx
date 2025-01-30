@@ -188,6 +188,7 @@
 // export default AnimalsList;
 "use client";
 import Navbar from "@/app/components/Navbar";
+import Image from "next/image";
 import React, { useState } from "react";
 import { FiSearch } from "react-icons/fi";
 
@@ -594,7 +595,9 @@ const AnimalsList = () => {
               <div className="w-full h-[240px] bg-gray-200 flex items-center justify-center">
                 {/* Display image preview if exists */}
                 {image ? (
-                  <img
+                  <Image
+                    width={"100%"}
+                    height={"100%"}
                     src={image}
                     alt="Animal Preview"
                     className="h-full w-full object-cover"

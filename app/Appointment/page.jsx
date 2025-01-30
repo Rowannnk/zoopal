@@ -75,7 +75,7 @@ const Appointment = () => {
             At AdoptAZooPal.com, we believe in connecting our adopters with the
             animals they support. Whether here to meet your adopted animal up
             close, take a behind-the-scenes tour, or just spend some quality
-            time with your new pal, we’ve made it easy to schedule an
+            time with your new pal, weve made it easy to schedule an
             unforgettable experience.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 text-left">
@@ -90,7 +90,7 @@ const Appointment = () => {
                 </li>
                 <li>
                   Behind-the-Scenes Tours: Go behind the scenes to learn about
-                  your animal’s care and habitat.
+                  your animals care and habitat.
                 </li>
                 <li>
                   Enrichment Activities: Watch or participate in feeding,
@@ -124,7 +124,7 @@ const Appointment = () => {
               className="px-8 py-4 bg-[#7b6fb1] text-white font-semibold rounded-full shadow-lg hover:bg-opacity-90"
               onClick={openModal}
             >
-              Let’s meet’em!!
+              {"Let's meet'em!!"}
             </button>
           </div>
         </div>

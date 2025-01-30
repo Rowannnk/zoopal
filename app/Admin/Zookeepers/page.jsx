@@ -1,6 +1,7 @@
 "use client";
 
 import Navbar from "@/app/components/Navbar";
+import Image from "next/image";
 import { useState } from "react";
 import { FiSearch } from "react-icons/fi";
 
@@ -211,7 +212,9 @@ export default function ZookeepersList() {
                   key={index}
                   className="bg-gray-100 p-4 rounded-xl flex flex-col items-center"
                 >
-                  <img
+                  <Image
+                    width={300}
+                    height={176}
                     src={animal.image}
                     alt={animal.name}
                     className="w-full h-44 object-cover rounded"

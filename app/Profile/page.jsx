@@ -485,6 +485,7 @@
 import { useState } from "react";
 import { FaPen } from "react-icons/fa"; // Importing the edit (pencil) icon
 import Navbar from "../components/Navbar";
+import Image from "next/image";
 
 export default function ProfilePage() {
   const [name, setName] = useState("Soshiro Hoshina");
@@ -520,7 +521,9 @@ export default function ProfilePage() {
               {/* Profile Picture with Upload */}
               <div className="relative w-24 h-24 rounded-full bg-gray-300 flex items-center justify-center text-white text-xl font-semibold">
                 {image ? (
-                  <img
+                  <Image
+                    width={300}
+                    height={200}
                     src={image}
                     alt="Profile"
                     className="w-full h-full rounded-full object-cover"
@@ -599,13 +602,13 @@ export default function ProfilePage() {
               Together, We Can Make a Difference!
             </p>
             <p className="text-gray-600 mt-3">
-              Your support goes far beyond just a donation or adoption — it’s a
-              lifeline for the animals you love. With your help, we’re able to
+              Your support goes far beyond just a donation or adoption — its a
+              lifeline for the animals you love. With your help, we are able to
               fund important care, research, and conservation programs that make
               a real impact.
             </p>
             <p className="text-gray-600 mt-3">
-              We’re excited to have you as part of our community, and we look
+              We are excited to have you as part of our community, and we look
               forward to continuing this journey together. Thank you for being
               an amazing part of our mission!
             </p>
