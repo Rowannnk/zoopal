@@ -31,7 +31,7 @@ const Register = () => {
       username: formData.username,
       email: formData.email,
       password: formData.password,
-      role: "user",
+      role: "admin",
     };
 
     // Retrieve existing users or initialize empty array
