@@ -533,65 +533,82 @@ const AnimalsList = () => {
 
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-1/2 flex">
-            <div className="w-1/2 p-4">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-1/2 grid grid-cols-2 gap-6">
+            {/* Left side with form inputs */}
+            <div className="flex flex-col space-y-4">
               <h2 className="text-xl font-semibold mb-4">
                 {selectedAnimal ? "Edit Animal" : "Add Animal"}
               </h2>
+              <div className="grid grid-cols-2 gap-4">
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  placeholder="Name"
+                  className="w-full mb-2 p-2 border rounded"
+                />
+                <input
+                  type="text"
+                  name="commonName"
+                  value={formData.commonName}
+                  onChange={handleInputChange}
+                  placeholder="Common Name"
+                  className="w-full mb-2 p-2 border rounded"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <input
+                  type="text"
+                  name="gender"
+                  value={formData.gender}
+                  onChange={handleInputChange}
+                  placeholder="Gender"
+                  className="w-full mb-2 p-2 border rounded"
+                />
+                <input
+                  type="number"
+                  name="age"
+                  value={formData.age}
+                  onChange={handleInputChange}
+                  placeholder="Age"
+                  className="w-full mb-2 p-2 border rounded"
+                />
+              </div>
               <input
-                type="text"
-                name="name"
-                value={formData.name}
+                type="date"
+                name="birthdate"
+                value={formData.birthdate}
                 onChange={handleInputChange}
-                placeholder="Name"
+                placeholder="Birthdate"
                 className="w-full mb-2 p-2 border rounded"
               />
-              <input
-                type="text"
-                name="commonName"
-                value={formData.commonName}
+              <textarea
+                name="description"
+                value={formData.description}
                 onChange={handleInputChange}
-                placeholder="Common Name"
-                className="w-full mb-2 p-2 border rounded"
-              />
-              <input
-                type="text"
-                name="species"
-                value={formData.species}
-                onChange={handleInputChange}
-                placeholder="Species"
-                className="w-full mb-2 p-2 border rounded"
-              />
-              <input
-                type="number"
-                name="age"
-                value={formData.age}
-                onChange={handleInputChange}
-                placeholder="Age"
-                className="w-full mb-2 p-2 border rounded"
-              />
-              <input
-                type="text"
-                name="gender"
-                value={formData.gender}
-                onChange={handleInputChange}
-                placeholder="Gender"
+                placeholder="Description"
                 className="w-full mb-4 p-2 border rounded"
+                rows="4"
               />
-              <button
-                onClick={handleSave}
-                className="bg-purple-200 text-black  px-4 py-2 rounded-lg"
-              >
-                {selectedAnimal ? "Edit Animal" : "Add Animal"}
-              </button>
-              <button
-                onClick={closeModal}
-                className="ml-2 bg-gray-300 px-4 py-2 rounded-lg"
-              >
-                Cancel
-              </button>
+              <div className="flex space-x-4">
+                <button
+                  onClick={handleSave}
+                  className="bg-purple-200 text-black px-4 py-2 rounded-lg"
+                >
+                  {selectedAnimal ? "Edit Animal" : "Add Animal"}
+                </button>
+                <button
+                  onClick={closeModal}
+                  className="ml-2 bg-gray-300 px-4 py-2 rounded-lg"
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
-            <div className="w-1/2 p-4 flex flex-col">
+
+            {/* Right side with image and zoo keeper */}
+            <div className="flex flex-col">
               <div className="w-full h-[240px] bg-gray-200 flex items-center justify-center">
                 {/* Display image preview if exists */}
                 {image ? (
@@ -616,7 +633,7 @@ const AnimalsList = () => {
                     value={formData.assignedZooKeeper}
                     onChange={handleZooKeeperChange}
                     className="px-4 py-2 border border-gray-300 rounded-lg w-1/2"
-                    placeholder="Enter zoo keeper name"
+                    placeholder="Enter zoo keeper"
                   />
                   <label className="bg-purple-200 py-2 px-4 rounded-full cursor-pointer">
                     <input

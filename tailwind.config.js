@@ -17,7 +17,6 @@ module.exports = {
       animation: {
         floating: "floating 3s ease-in-out infinite",
       },
-
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",

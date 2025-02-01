@@ -17,11 +17,11 @@ const HeroSection = () => {
           {/* Full width of the column */}
           <div className="flex justify-center items-center w-full transition-transform transform hover:scale-110 hover:rotate-3 ease-in-out duration-700">
             <Image
-              src="/images/hero_section_img.png"
+              src="/images/main1.jpg"
               alt="Zoo Animal"
               width={1200} // Set the width of the image to a high number for full width
               height={800} // Adjust height as necessary
-              className="rounded-3xl object-cover w-full h-auto" // Ensures full width, auto height for aspect ratio
+              className="rounded-3xl object-contain w-full h-auto mt-10" // Ensures full width, auto height for aspect ratio
             />
           </div>
         </div>

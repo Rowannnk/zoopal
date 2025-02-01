@@ -232,39 +232,47 @@ export default function ZookeepersList() {
       {/* Modal to add new zookeeper */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-8 rounded-lg shadow-lg w-1/2">
+          <div className="bg-white p-8 rounded-lg shadow-lg w-200 h-[400px]">
             <h3 className="text-xl font-semibold mb-4">Add New Zookeeper</h3>
             <form onSubmit={handleSubmit}>
-              <div className="mb-4">
-                <label htmlFor="name" className="block text-sm font-medium">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  value={newZookeeper.name}
-                  onChange={(e) =>
-                    setNewZookeeper({ ...newZookeeper, name: e.target.value })
-                  }
-                  className="w-full px-4 py-2 border rounded-lg"
-                  required
-                />
+              {/* Two input fields side by side: Name and Email */}
+              <div className="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    value={newZookeeper.name}
+                    onChange={(e) =>
+                      setNewZookeeper({ ...newZookeeper, name: e.target.value })
+                    }
+                    className="w-full px-4 py-2 border rounded-lg"
+                    required
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    value={newZookeeper.email}
+                    onChange={(e) =>
+                      setNewZookeeper({
+                        ...newZookeeper,
+                        email: e.target.value,
+                      })
+                    }
+                    className="w-full px-4 py-2 border rounded-lg"
+                    required
+                  />
+                </div>
               </div>
-              <div className="mb-4">
-                <label htmlFor="email" className="block text-sm font-medium">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  value={newZookeeper.email}
-                  onChange={(e) =>
-                    setNewZookeeper({ ...newZookeeper, email: e.target.value })
-                  }
-                  className="w-full px-4 py-2 border rounded-lg"
-                  required
-                />
-              </div>
+
+              {/* Single input for Phone */}
               <div className="mb-4">
                 <label htmlFor="phone" className="block text-sm font-medium">
                   Phone
@@ -280,6 +288,7 @@ export default function ZookeepersList() {
                   required
                 />
               </div>
+
               {/* Password Field */}
               <div className="mb-4">
                 <label htmlFor="password" className="block text-sm font-medium">
@@ -299,6 +308,8 @@ export default function ZookeepersList() {
                   required
                 />
               </div>
+
+              {/* Buttons */}
               <div className="flex justify-between gap-2">
                 <button
                   type="button"

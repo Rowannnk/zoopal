@@ -482,17 +482,28 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaPen } from "react-icons/fa"; // Importing the edit (pencil) icon
 import Navbar from "../components/Navbar";
 import Image from "next/image";
 
 export default function ProfilePage() {
-  const [name, setName] = useState("Soshiro Hoshina");
-  const [phone, setPhone] = useState("(123) 456 - 789");
-  const [email, setEmail] = useState("hoshinaiscool@gmail.com");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [updated, setUpdated] = useState(false);
   const [image, setImage] = useState(null);
+
+  useEffect(() => {
+    // Get the user data from localStorage
+    const userData = localStorage.getItem("user");
+    if (userData) {
+      const user = JSON.parse(userData);
+      setName(user.name);
+      setPhone(user.phone || ""); // Use a default phone if not available
+      setEmail(user.email || ""); // Use a default email if not available
+    }
+  }, []);
 
   const handleUpdate = () => {
     setUpdated(true);

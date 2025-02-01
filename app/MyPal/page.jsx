@@ -8,29 +8,45 @@ const MyPal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAnimal, setSelectedAnimal] = useState(null);
 
-  // Animal data (adopted animals)
   const adoptedAnimals = [
     {
       id: 1,
       species: "Panthera uncia",
       commonName: "Snow Leopard",
-      imageUrl: "/images/pet1.jpg",
-      age: 7,
-      gender: "Female",
-      conservationStatus: "Endangered",
+      name: "Snowy",
       description:
-        "The Snow Leopard is a majestic and elusive big cat known for its thick fur and powerful build.",
+        "A solitary and elusive big cat native to the mountain ranges of Central and South Asia.",
+      gender: "Female",
+      age: 5,
+      birthdate: "2018-05-15",
+      adoptionStatus: "Endangered",
+      imageUrl: "/images/snow_leopard.jpg",
     },
     {
-      id: 2,
-      species: "Loxodonta africana",
-      commonName: "African Elephant",
-      imageUrl: "/images/pet2.jpg",
-      age: 12,
-      gender: "Male",
-      conservationStatus: "Vulnerable",
+      id: 3,
+      species: "Ailurus fulgens",
+      commonName: "Red Panda",
+      name: "Rusty",
       description:
-        "The African Elephant is the largest land animal, revered for its intelligence and memory.",
+        "A small, nocturnal mammal native to the Himalayas and southwestern China, recognized by its reddish-brown fur.",
+      gender: "Male",
+      age: 3,
+      birthdate: "2020-07-10",
+      adoptionStatus: "Moderately Concerned",
+      imageUrl: "/images/red_panda.jpg",
+    },
+    {
+      id: 4,
+      species: "Panthera tigris",
+      commonName: "Bengal Tiger",
+      name: "Rajah",
+      description:
+        "A powerful and majestic predator native to India, known for its orange coat with black stripes.",
+      gender: "Male",
+      age: 7,
+      birthdate: "2016-03-25",
+      adoptionStatus: "Endangered",
+      imageUrl: "/images/bengal_tiger.jpg",
     },
   ];
 
@@ -55,7 +71,7 @@ const MyPal = () => {
           <h1 className="text-4xl font-bold mb-6 text-center">
             Thank You for Giving Them A Brighter Future!
           </h1>
-          <p className="text-lg leading-relaxed mb-10 text-center">
+          <p className="text-lg leading-relaxed text-center">
             At AdoptAZooPal.com, we believe in connecting our adopters with the
             animals they support. Whether here to meet your adopted animal up
             close, take a behind-the-scenes tour, or just spend some quality
@@ -81,25 +97,25 @@ const MyPal = () => {
 
               {/* Card Content */}
               <div className="p-4">
-                <h6 className="mb-2 text-slate-800 text-xl font-semibold">
+                <h6 className="mb-2 text-[#7b6fb1] text-xl font-semibold">
                   {animal.commonName}
                 </h6>
                 <p className="text-slate-600 leading-normal font-light">
-                  {animal.species}
+                  {animal.name}
                 </p>
                 <p className="text-slate-600 leading-normal font-light">
-                  {animal.conservationStatus}
+                  Status : {animal.adoptionStatus}
                 </p>
               </div>
 
               {/* Card Image */}
-              <div className="relative h-60 m-2.5 overflow-hidden text-white rounded-md">
+              <div className="relative h-80 m-2.5 overflow-hidden text-white rounded-md">
                 <Image
                   width={300}
                   height={200}
                   src={animal.imageUrl}
                   alt="animal image"
-                  className="object-contain w-full  rounded-md transition-transform duration-300 transform hover:scale-110"
+                  className="object-cover w-full h-full  rounded-md transition-transform duration-300 transform hover:scale-110"
                 />
               </div>
             </div>
@@ -114,7 +130,9 @@ const MyPal = () => {
               <button
                 onClick={handleCloseModal}
                 className="absolute top-3 right-3 text-gray-400 hover:text-gray-600"
-              ></button>
+              >
+                ✖️
+              </button>
 
               {/* Header */}
               <h3 className="text-2xl font-semibold text-center mb-6">
@@ -122,12 +140,12 @@ const MyPal = () => {
               </h3>
 
               {/* Two Column Layout */}
-              <div className="flex flex-col sm:flex-row items-center">
+              <div className="flex flex-col sm:flex-row items-center gap-6">
                 {/* Left Column: Image */}
-                <div className="sm:w-1/2 flex justify-center items-center mb-4 sm:mb-0">
+                <div className="sm:w-1/2 flex justify-center items-center mb-4 sm:mb-0 bg-gray-100 rounded-lg p-6">
                   <Image
                     src={selectedAnimal.imageUrl || "/placeholder-image.png"}
-                    alt={`animal's latest photo`}
+                    alt={`${selectedAnimal.commonName}'s latest photo`}
                     width={300}
                     height={300}
                     className="rounded-lg shadow-md object-cover"

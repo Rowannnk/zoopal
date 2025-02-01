@@ -6,54 +6,135 @@ import Link from "next/link";
 import { FaSort, FaFilter, FaSearch } from "react-icons/fa"; // Importing icons
 
 const Adoption = () => {
+  // const animals = [
+  //   {
+  //     id: 1,
+  //     species: "Panthera uncia",
+  //     commonName: "Snow Leopard",
+  //     age: 5,
+  //     adoptionStatus: "Endangered",
+  //     imageUrl: "/images/pet1.jpg",
+  //   },
+  //   {
+  //     id: 2,
+  //     species: "Loxodonta africana",
+  //     commonName: "African Elephant",
+  //     age: 10,
+  //     adoptionStatus: "No Adoptive Owner",
+  //     imageUrl: "/images/pet2.jpg",
+  //   },
+  //   {
+  //     id: 3,
+  //     species: "Ailurus fulgens",
+  //     commonName: "Red Panda",
+  //     age: 3,
+  //     adoptionStatus: "Moderately Concerned",
+  //     imageUrl: "/images/pet3.jpg",
+  //   },
+  //   {
+  //     id: 4,
+  //     species: "Panthera tigris",
+  //     commonName: "Bengal Tiger",
+  //     age: 7,
+  //     adoptionStatus: "Endangered",
+  //     imageUrl: "/images/pet4.jpg",
+  //   },
+  //   {
+  //     id: 5,
+  //     species: "Panthera leo",
+  //     commonName: "Lion",
+  //     age: 8,
+  //     adoptionStatus: "No Adoptive Owner",
+  //     imageUrl: "/images/pet5.jpg",
+  //   },
+  //   {
+  //     id: 6,
+  //     species: "Elephas maximus",
+  //     commonName: "Asian Elephant",
+  //     age: 6,
+  //     adoptionStatus: "Moderately Concerned",
+  //     imageUrl: "/images/pet6.jpg",
+  //   },
+  // ];
+
   const animals = [
     {
       id: 1,
       species: "Panthera uncia",
       commonName: "Snow Leopard",
+      name: "Snowy",
+      description:
+        "A solitary and elusive big cat native to the mountain ranges of Central and South Asia.",
+      gender: "Female",
       age: 5,
+      birthdate: "2018-05-15",
       adoptionStatus: "Endangered",
-      imageUrl: "/images/pet1.jpg",
+      imageUrl: "/images/snow_leopard.jpg",
     },
     {
       id: 2,
       species: "Loxodonta africana",
       commonName: "African Elephant",
+      name: "Tusker",
+      description:
+        "The largest land animal, known for its large ears and long tusks, found in Africa.",
+      gender: "Male",
       age: 10,
+      birthdate: "2013-11-20",
       adoptionStatus: "No Adoptive Owner",
-      imageUrl: "/images/pet2.jpg",
+      imageUrl: "/images/african_elephant.jpg",
     },
     {
       id: 3,
       species: "Ailurus fulgens",
       commonName: "Red Panda",
+      name: "Rusty",
+      description:
+        "A small, nocturnal mammal native to the Himalayas and southwestern China, recognized by its reddish-brown fur.",
+      gender: "Male",
       age: 3,
+      birthdate: "2020-07-10",
       adoptionStatus: "Moderately Concerned",
-      imageUrl: "/images/pet3.jpg",
+      imageUrl: "/images/red_panda.jpg",
     },
     {
       id: 4,
       species: "Panthera tigris",
       commonName: "Bengal Tiger",
+      name: "Rajah",
+      description:
+        "A powerful and majestic predator native to India, known for its orange coat with black stripes.",
+      gender: "Male",
       age: 7,
+      birthdate: "2016-03-25",
       adoptionStatus: "Endangered",
-      imageUrl: "/images/pet4.jpg",
+      imageUrl: "/images/bengal_tiger.jpg",
     },
     {
       id: 5,
       species: "Panthera leo",
       commonName: "Lion",
+      name: "Simba",
+      description:
+        "Known as the 'king of the jungle', lions are large wild cats found in Africa and parts of India.",
+      gender: "Male",
       age: 8,
+      birthdate: "2015-02-10",
       adoptionStatus: "No Adoptive Owner",
-      imageUrl: "/images/pet5.jpg",
+      imageUrl: "/images/lion.jpg",
     },
     {
       id: 6,
-      species: "Elephas maximus",
-      commonName: "Asian Elephant",
-      age: 6,
-      adoptionStatus: "Moderately Concerned",
-      imageUrl: "/images/pet6.jpg",
+      species: "Gorilla gorilla",
+      commonName: "Western Gorilla",
+      name: "Koko",
+      description:
+        "The Western Gorilla, a powerful and intelligent primate, is native to the forests of Central Africa. This species is known for its robust build, with large hands, arms, and a broad chest, which make them strong and capable of climbing trees, although they are primarily terrestrial. Western Gorillas are highly social creatures, living in small groups led by a dominant silverback male. They communicate through vocalizations, body language, and facial expressions. Despite their intelligence and strength, Western Gorillas are critically endangered due to habitat loss, poaching, and disease, making them one of the most at-risk species of great apes.",
+      gender: "Female",
+      age: 12,
+      birthdate: "2011-06-21",
+      adoptionStatus: "Critically Endangered",
+      imageUrl: "/images/gorilla.jpg",
     },
   ];
 
@@ -108,7 +189,7 @@ const Adoption = () => {
             Meet Today&apos;s Zoo Pals Waiting for You!
           </h1>
           <p className="text-gray-700 mb-8">
-            Looking for a new friend? Check out today’s hand-picked animals that
+            Looking for a new friend? Check out todays hand-picked animals that
             are waiting for your love and support!
           </p>
 

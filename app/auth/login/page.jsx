@@ -1,31 +1,58 @@
 "use client";
 import Navbar from "@/app/components/Navbar";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaPaw } from "react-icons/fa";
 
 const LogIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // Check if there's a logged-in user in localStorage
+    const savedUser = JSON.parse(localStorage.getItem("user"));
+    if (savedUser) {
+      setUser(savedUser);
+      // Optionally, redirect to home if already logged in
+      window.location.href = "/";
+    }
+  }, []);
 
   const handleRegisterRedirect = () => {
     window.location.href = "/auth/register";
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const userCredentials = { email, password };
 
-    const user = users.find(
-      (u) => u.email === email && u.password === password
-    );
+    try {
+      const response = await fetch("/api/auth/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userCredentials),
+      });
 
-    if (user) {
-      alert("Login successful!");
-      window.location.href = "/";
-    } else {
-      alert("Invalid email or password");
+      const data = await response.json();
+
+      if (response.ok) {
+        setUser(data.user);
+        // Store the user in localStorage for persistence
+        localStorage.setItem("user", JSON.stringify(data.user));
+        alert("Login successful!");
+        console.log(user);
+        window.location.href = "/"; // Redirect after successful login
+      } else {
+        setErrorMessage(data.message || "Something went wrong.");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      setErrorMessage("An error occurred while trying to login.");
     }
   };
 
@@ -40,6 +67,10 @@ const LogIn = () => {
               Login to get your wild experience
               <FaPaw />
             </p>
+
+            {errorMessage && (
+              <p className="text-red-500 text-sm">{errorMessage}</p>
+            )}
 
             <form onSubmit={handleLogin} className="flex flex-col gap-4">
               <input

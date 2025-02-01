@@ -11,7 +11,7 @@ export default function AppointmentCard() {
       time: "10:00 AM",
       animal: "Snow Leopard",
       status: "Confirmed",
-      imageUrl: "/images/pet1.jpg",
+      imageUrl: "/images/snow_leopard.jpg",
     },
     {
       id: 2,
@@ -19,7 +19,7 @@ export default function AppointmentCard() {
       time: "2:00 PM",
       animal: "Red Panda",
       status: "Pending",
-      imageUrl: "/images/pet2.jpg",
+      imageUrl: "/images/red_panda.jpg",
     },
     {
       id: 3,
@@ -27,7 +27,7 @@ export default function AppointmentCard() {
       time: "1:30 PM",
       animal: "Bengal Tiger",
       status: "Confirmed",
-      imageUrl: "/images/pet3.jpg",
+      imageUrl: "/images/bengal_tiger.jpg",
     },
   ]);
 

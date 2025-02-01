@@ -12,6 +12,9 @@ const Register = () => {
     confirmPassword: "",
   });
 
+  const [error, setError] = useState(""); // For handling error messages
+  const [loading, setLoading] = useState(false); // For loading state
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -20,32 +23,46 @@ const Register = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
 
+    // Set loading state to true when making the request
+    setLoading(true);
+    setError(""); // Reset error state
+
     const newUser = {
-      username: formData.username,
+      name: formData.username,
       email: formData.email,
       password: formData.password,
-      role: "admin",
     };
 
-    // Retrieve existing users or initialize empty array
-    const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
+    try {
+      const response = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newUser),
+      });
 
-    // Add the new user to the array
-    existingUsers.push(newUser);
+      const data = await response.json();
 
-    // Save the updated users array to localStorage
-    localStorage.setItem("users", JSON.stringify(existingUsers));
-
-    alert("Registration successful!");
-
-    window.location.href = "/auth/login";
+      if (response.ok) {
+        alert("Registration successful!");
+        window.location.href = "/auth/login";
+      } else {
+        setError(data.message || "Something went wrong!");
+      }
+    } catch (err) {
+      setError("An error occurred. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleLoginRedirect = () => {
@@ -63,7 +80,10 @@ const Register = () => {
               Register to get your wild experience
               <FaPaw />
             </p>
-
+            {error && (
+              <div className="text-red-500 text-sm mt-2">{error}</div>
+            )}{" "}
+            {/* Display error */}
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <input
                 className="p-2 mt-8 rounded-xl border"
@@ -101,17 +121,20 @@ const Register = () => {
                   onChange={handleChange}
                 />
               </div>
-              <button className="bg-[#7b6fb1] rounded-xl text-white py-2 hover:scale-105 duration-300">
-                Register
+              <button
+                className={`bg-[#7b6fb1] rounded-xl text-white py-2 hover:scale-105 duration-300 ${
+                  loading ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+                disabled={loading}
+              >
+                {loading ? "Registering..." : "Register"}
               </button>
             </form>
-
             <div className="mt-6 grid grid-cols-3 items-center text-gray-400">
               <hr className="border-gray-400" />
               <p className="text-center text-sm"></p>
               <hr className="border-gray-400" />
             </div>
-
             <div className="mt-5 text-xs flex justify-between items-center text-[#7b6fb1]">
               <p>Already have an account?</p>
               <a
