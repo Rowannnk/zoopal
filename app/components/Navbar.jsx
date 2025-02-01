@@ -240,7 +240,11 @@ const Navbar = () => {
 
   useEffect(() => {
     const userData = localStorage.getItem("user");
-    if (!userData && pathname !== "/auth/login") {
+    if (
+      !userData &&
+      pathname !== "/auth/login" &&
+      pathname !== "/auth/register"
+    ) {
       window.location.href = "/auth/login";
     } else {
       if (userData) {
