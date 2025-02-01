@@ -17,7 +17,7 @@ export default function CheckAppointments() {
     },
     {
       id: 2,
-      date: "2025-02-02",
+      date: "2025-02-03",
       time: "2:00 PM",
       animal: "Red Panda",
       status: "Pending",
