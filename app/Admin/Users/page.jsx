@@ -12,11 +12,23 @@ const users = Array.from({ length: 30 }, (_, i) => ({
 }));
 
 const adoptedAnimals = [
-  { name: "Ava the Deer", image: "/images/pet6.jpg" },
-  { name: "Max the Tiger", image: "/images/pet2.jpg" },
-  { name: "Winnie the Bear", image: "/images/pet3.jpg" },
-  { name: "Cappy the Capybara", image: "/images/pet4.jpg" },
-  { name: "Mimi the Capybara", image: "/images/pet5.jpg" },
+  { name: "Ava the Deer", image: "/images/pet6.jpg", type: "Food" },
+  {
+    name: "Max the Tiger",
+    image: "/images/pet2.jpg",
+    type: "Enclosure Maintenance",
+  },
+  {
+    name: "Winnie the Bear",
+    image: "/images/pet3.jpg",
+    type: "Donation to Organizations",
+  },
+  { name: "Cappy the Capybara", image: "/images/pet4.jpg", type: "Food" },
+  {
+    name: "Mimi the Capybara",
+    image: "/images/pet5.jpg",
+    type: "Enclosure Maintenance",
+  },
 ];
 
 export default function UserList() {
@@ -24,6 +36,7 @@ export default function UserList() {
   const [currentPage, setCurrentPage] = useState(2);
   const usersPerPage = 10;
   const [selectedUser, setSelectedUser] = useState(null);
+  const [filterType, setFilterType] = useState("All");
 
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(search.toLowerCase())
@@ -33,6 +46,11 @@ export default function UserList() {
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
   const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
+
+  const filteredAnimals = adoptedAnimals.filter((animal) => {
+    if (filterType === "All") return true;
+    return animal.type === filterType;
+  });
 
   return (
     <>
@@ -129,8 +147,31 @@ export default function UserList() {
                 ✖
               </button>
             </div>
+
+            {/* Filter Dropdown for Animal Types */}
+            <div className="mb-4 flex items-center gap-2">
+              <span className="text-lg font-semibold text-gray-700">
+                Adoption Type:
+              </span>
+              <select
+                value={filterType}
+                onChange={(e) => setFilterType(e.target.value)}
+                className="px-4 py-2 rounded-lg border border-gray-300 bg-purple-50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-300 transition-colors"
+              >
+                <option value="All">All</option>
+                <option value="Food">Food</option>
+                <option value="Enclosure Maintenance">
+                  Enclosure Maintenance
+                </option>
+                <option value="Donation to Organizations">
+                  Donation to Organizations
+                </option>
+              </select>
+            </div>
+
+            {/* Display Filtered Animals */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {adoptedAnimals.map((animal, index) => (
+              {filteredAnimals.map((animal, index) => (
                 <div
                   key={index}
                   className="bg-gray-100 p-4 rounded-xl flex flex-col items-center"

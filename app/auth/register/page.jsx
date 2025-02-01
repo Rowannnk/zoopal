@@ -1,4 +1,5 @@
 "use client";
+import swal from "sweetalert";
 import Navbar from "@/app/components/Navbar";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -27,7 +28,7 @@ const Register = () => {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
+      swal("Error", "Passwords do not match!", "error");
       return;
     }
 
@@ -53,13 +54,16 @@ const Register = () => {
       const data = await response.json();
 
       if (response.ok) {
-        alert("Registration successful!");
-        window.location.href = "/auth/login";
+        swal("Success", "Registration successful!", "success").then(() => {
+          window.location.href = "/auth/login";
+        });
       } else {
         setError(data.message || "Something went wrong!");
+        swal("Error", data.message || "Something went wrong!", "error");
       }
     } catch (err) {
       setError("An error occurred. Please try again later.");
+      swal("Error", "An error occurred. Please try again later.", "error");
     } finally {
       setLoading(false);
     }
@@ -72,7 +76,7 @@ const Register = () => {
   return (
     <>
       <Navbar />
-      <section className="bg-gray-50 min-h-screen flex items-center  flex-col">
+      <section className="bg-gray-50 min-h-screen flex items-center flex-col">
         <div className="bg-gray-100 flex rounded-2xl shadow-lg max-w-3xl p-5 items-center mt-20">
           <div className="md:w-1/2 px-8 md:px-16">
             <h2 className="font-bold text-2xl text-[#7b6fb1]">Register</h2>
@@ -80,10 +84,7 @@ const Register = () => {
               Register to get your wild experience
               <FaPaw />
             </p>
-            {error && (
-              <div className="text-red-500 text-sm mt-2">{error}</div>
-            )}{" "}
-            {/* Display error */}
+            {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <input
                 className="p-2 mt-8 rounded-xl border"

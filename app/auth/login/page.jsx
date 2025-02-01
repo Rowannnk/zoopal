@@ -1,4 +1,5 @@
 "use client";
+import swal from "sweetalert";
 import Navbar from "@/app/components/Navbar";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
@@ -44,15 +45,17 @@ const LogIn = () => {
         setUser(data.user);
         // Store the user in localStorage for persistence
         localStorage.setItem("user", JSON.stringify(data.user));
-        alert("Login successful!");
-        console.log(user);
-        window.location.href = "/"; // Redirect after successful login
+        swal("Success", "Login successful!", "success").then(() => {
+          window.location.href = "/"; // Redirect after successful login
+        });
       } else {
         setErrorMessage(data.message || "Something went wrong.");
+        swal("Error", data.message || "Something went wrong.", "error");
       }
     } catch (error) {
       console.error("Login error:", error);
       setErrorMessage("An error occurred while trying to login.");
+      swal("Error", "An error occurred while trying to login.", "error");
     }
   };
 
@@ -121,7 +124,7 @@ const LogIn = () => {
             <Image
               width={612}
               height={500}
-              className="rounded-2xl h-[500px] w-full object-cover "
+              className="rounded-2xl h-[500px] w-full object-cover"
               src="/images/login_image.jpeg"
               alt="Login Image"
             />

@@ -4,17 +4,31 @@ import Navbar from "../components/Navbar";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import Image from "next/image";
+import Swal from "sweetalert2";
 
 const Appointment = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAnimal, setSelectedAnimal] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState("");
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   const handleAnimalSelect = (animal) => setSelectedAnimal(animal);
   const handleDateChange = (newDate) => setSelectedDate(newDate);
+  const handleTimeChange = (event) => setSelectedTime(event.target.value);
+
+  const timeSlots = [
+    "09:00 AM",
+    "10:00 AM",
+    "11:00 AM",
+    "12:00 PM",
+    "01:00 PM",
+    "02:00 PM",
+    "03:00 PM",
+    "04:00 PM",
+  ];
 
   const formattedDate = selectedDate
     ? new Date(selectedDate).toLocaleDateString("en-US", {
@@ -173,7 +187,7 @@ const Appointment = () => {
 
         {isModalOpen && (
           <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50">
-            <div className="bg-white p-8 rounded-2xl shadow-xl w-[600px]">
+            <div className="bg-white p-8 rounded-2xl shadow-xl w-[800px]">
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-semibold text-gray-800">
                   Schedule an Appointment
@@ -185,9 +199,9 @@ const Appointment = () => {
                   ✖
                 </button>
               </div>
-              <div className="grid grid-cols-2 gap-6">
+              <div className="grid grid-cols-3 gap-6">
                 <div>
-                  <h3 className="text-lg font-medium mb-3 text-white bg-[#7b6fb1] px-4 py-4 rounded-full text-center">
+                  <h3 className="text-lg font-medium mb-3 text-white bg-[#7b6fb1] px-1 py-3 rounded-full text-center">
                     Choose A Pal
                   </h3>
                   <div className="h-60 overflow-y-auto">
@@ -217,10 +231,27 @@ const Appointment = () => {
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-lg font-medium mb-3 text-white bg-[#7b6fb1] px-4 py-4 rounded-full text-center">
+                  <h3 className="text-lg font-medium mb-3 text-white bg-[#7b6fb1] px-1 py-3 rounded-full text-center">
                     Pick A Date
                   </h3>
                   <Calendar value={selectedDate} onChange={handleDateChange} />
+                </div>
+                <div>
+                  <h3 className="text-lg font-medium mb-3 text-white bg-[#7b6fb1] px-1 py-3 rounded-full text-center">
+                    Choose A Time
+                  </h3>
+                  <select
+                    className="w-full p-3 border rounded-lg text-gray-700"
+                    value={selectedTime}
+                    onChange={handleTimeChange}
+                  >
+                    <option value="">Select a time</option>
+                    {timeSlots.map((time, index) => (
+                      <option key={index} value={time}>
+                        {time}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
 
@@ -235,12 +266,20 @@ const Appointment = () => {
                   className="px-5 py-2 text-white bg-[#7b6fb1] rounded-lg hover:bg-[#6a5fb1] transition"
                   onClick={() => {
                     if (selectedAnimal && selectedDate) {
-                      alert(
-                        `Animal: ${selectedAnimal}\nDate: ${formattedDate}`
-                      );
+                      Swal.fire({
+                        title: "Appointment Confirmed!",
+                        text: `You have booked an appointment with ${selectedAnimal} on ${formattedDate} at ${selectedTime}.`,
+                        icon: "success",
+                        confirmButtonColor: "#7b6fb1",
+                      });
                       closeModal();
                     } else {
-                      alert("Please select an animal and a date.");
+                      Swal.fire({
+                        title: "Missing Information",
+                        text: "Please select an animal and a date before booking.",
+                        icon: "warning",
+                        confirmButtonColor: "#7b6fb1",
+                      });
                     }
                   }}
                 >

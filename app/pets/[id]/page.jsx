@@ -5,6 +5,7 @@ import Navbar from "@/app/components/Navbar";
 import { useState } from "react";
 import { FaPaw, FaMars, FaTree } from "react-icons/fa";
 import { motion } from "framer-motion";
+import swal from "sweetalert";
 
 const animals = [
   {
@@ -92,6 +93,7 @@ const PetDetail = () => {
   const router = useRouter();
   const [isOptionsVisible, setIsOptionsVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Choose Options");
+  const [isAdopted, setIsAdopted] = useState(false);
 
   const toggleOptions = () => {
     setIsOptionsVisible((prev) => !prev);
@@ -103,6 +105,24 @@ const PetDetail = () => {
   };
 
   const animal = animals.find((a) => a.id === parseInt(id));
+
+  // New adopt handler using SweetAlert
+  const handleAdoptNow = () => {
+    if (selectedOption === "Choose Options") {
+      swal("Oops!", "Please choose an option before adopting.", "warning");
+    } else {
+      swal({
+        title: "Success!",
+        text: `You adopted ${animal.commonName}! 🎉\n${selectedOption}`,
+        icon: "success",
+        buttons: ["Cancel", "OK"],
+      }).then((willAdopt) => {
+        if (willAdopt) {
+          setIsAdopted(true); // Update state to reflect adoption
+        }
+      });
+    }
+  };
 
   if (!animal) {
     return (
@@ -159,15 +179,24 @@ const PetDetail = () => {
             </p>
             <div className="flex gap-4 mt-10">
               <button
-                className="px-6 py-4 bg-[#7b6fb1] text-white rounded-full hover:bg-[#504394]"
-                onClick={() => alert(`You adopted ${animal.commonName}! 🎉`)}
+                className={`px-6 py-4 rounded-full ${
+                  isAdopted
+                    ? "bg-purple-400 cursor-not-allowed text-white"
+                    : "bg-[#7b6fb1] hover:bg-[#504394] text-white"
+                }`}
+                onClick={handleAdoptNow}
+                disabled={isAdopted}
               >
-                Adopt Now!
+                {isAdopted ? "You already adopted ! " : "Adopt Now"}
               </button>
 
               <div className="relative">
                 <button
-                  className="px-6 py-4 bg-white text-gray-700 border border-gray-300 rounded-full hover:bg-gray-100"
+                  className={`px-6 py-4 rounded-full border ${
+                    isAdopted
+                      ? "bg-blue-400 text-white cursor-not-allowed"
+                      : "bg-gray-200"
+                  }`}
                   onClick={toggleOptions}
                 >
                   {selectedOption}
@@ -198,8 +227,8 @@ const PetDetail = () => {
             <Image
               src={animal.imageUrl}
               alt={animal.commonName}
-              width={400} // Set a fixed width for the rectangle
-              height={300} // Set a fixed height for the rectangle
+              width={400}
+              height={300}
               sizes="100vw"
               className="object-cover rounded-xl shadow-md"
             />

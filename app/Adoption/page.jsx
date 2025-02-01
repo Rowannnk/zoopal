@@ -6,57 +6,6 @@ import Link from "next/link";
 import { FaSort, FaFilter, FaSearch } from "react-icons/fa"; // Importing icons
 
 const Adoption = () => {
-  // const animals = [
-  //   {
-  //     id: 1,
-  //     species: "Panthera uncia",
-  //     commonName: "Snow Leopard",
-  //     age: 5,
-  //     adoptionStatus: "Endangered",
-  //     imageUrl: "/images/pet1.jpg",
-  //   },
-  //   {
-  //     id: 2,
-  //     species: "Loxodonta africana",
-  //     commonName: "African Elephant",
-  //     age: 10,
-  //     adoptionStatus: "No Adoptive Owner",
-  //     imageUrl: "/images/pet2.jpg",
-  //   },
-  //   {
-  //     id: 3,
-  //     species: "Ailurus fulgens",
-  //     commonName: "Red Panda",
-  //     age: 3,
-  //     adoptionStatus: "Moderately Concerned",
-  //     imageUrl: "/images/pet3.jpg",
-  //   },
-  //   {
-  //     id: 4,
-  //     species: "Panthera tigris",
-  //     commonName: "Bengal Tiger",
-  //     age: 7,
-  //     adoptionStatus: "Endangered",
-  //     imageUrl: "/images/pet4.jpg",
-  //   },
-  //   {
-  //     id: 5,
-  //     species: "Panthera leo",
-  //     commonName: "Lion",
-  //     age: 8,
-  //     adoptionStatus: "No Adoptive Owner",
-  //     imageUrl: "/images/pet5.jpg",
-  //   },
-  //   {
-  //     id: 6,
-  //     species: "Elephas maximus",
-  //     commonName: "Asian Elephant",
-  //     age: 6,
-  //     adoptionStatus: "Moderately Concerned",
-  //     imageUrl: "/images/pet6.jpg",
-  //   },
-  // ];
-
   const animals = [
     {
       id: 1,
