@@ -4,6 +4,7 @@ import Navbar from "@/app/components/Navbar";
 import Image from "next/image";
 import { useState } from "react";
 import { FiSearch } from "react-icons/fi";
+import Swal from "sweetalert2";
 
 const zookeeperList = [
   {
@@ -68,7 +69,7 @@ export default function ZookeepersList() {
     name: "",
     email: "",
     phone: "",
-    password: "", // Add password field
+    password: "",
     adoptedAnimals: [],
   });
 
@@ -86,29 +87,43 @@ export default function ZookeepersList() {
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newId = zookeeperList.length
-      ? zookeeperList[zookeeperList.length - 1].id + 1
-      : 1;
-    const newZookeeperWithId = { ...newZookeeper, id: newId };
-    zookeeperList.push(newZookeeperWithId);
-    closeModal();
+
+    Swal.fire({
+      title: "Are you sure you want to add this new zookeeper?",
+      text: "This action will add a new zookeeper to the list.",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, add it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const newId = zookeeperList.length
+          ? zookeeperList[zookeeperList.length - 1].id + 1
+          : 1;
+        const newZookeeperWithId = { ...newZookeeper, id: newId };
+        zookeeperList.push(newZookeeperWithId);
+
+        Swal.fire("Added!", "The new zookeeper has been added.", "success");
+        closeModal();
+      }
+    });
   };
 
   return (
     <>
       <Navbar />
-      <div className="w-full p-8">
+      <div className="w-full p-8 bg-gradient-to-br from-[#f4f2fa] via-[#e0d9f3] to-[#d1c8f0] h-screen">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-semibold">Zookeepers</h2>
           <div className="flex items-center gap-2">
             <button
               onClick={() => openModal()}
-              className="bg-purple-200 text-purple-800 px-4 py-2 rounded-lg hover:bg-purple-400"
+              className="bg-[#7b6fb1] text-white px-4 py-2 rounded-lg hover:bg-[#9a89c8]"
             >
-              + Add New Zookeeper
+              Add New Zookeeper
             </button>
             <div className="relative">
               <input
@@ -126,29 +141,29 @@ export default function ZookeepersList() {
           <table className="w-full bg-white border rounded-lg">
             <thead>
               <tr className="bg-[#cecde1]">
-                <th className="p-2 text-left w-1/3">Name</th>
-                <th className="p-2 text-left w-1/6">Email</th>
-                <th className="p-2 text-left w-1/6">Phone</th>
-                <th className="p-2 text-left w-1/6">Action</th>
+                <th className="p-4 text-left w-1/3">Name</th>
+                <th className="p-4 text-left w-1/6">Email</th>
+                <th className="p-4 text-left w-1/6">Phone</th>
+                <th className="p-4 text-left w-1/6">Action</th>
               </tr>
             </thead>
             <tbody>
               {currentZookeepers.map((zookeeper) => (
                 <tr key={zookeeper.id} className="border-t">
-                  <td className="p-2 flex items-center gap-2">
+                  <td className="p-4 flex items-center gap-2">
                     <span className="bg-gray-300 rounded-full w-6 h-6 flex items-center justify-center">
                       👤
                     </span>
                     {zookeeper.name}
                   </td>
-                  <td className="p-2">{zookeeper.email}</td>
-                  <td className="p-2 ">{zookeeper.phone}</td>
-                  <td className="p-2 ">
+                  <td className="p-4">{zookeeper.email}</td>
+                  <td className="p-4 ">{zookeeper.phone}</td>
+                  <td className="p-4 ">
                     <button
                       className="text-black hover:bg-[#cecde1] px-4 py-2 rounded-full"
                       onClick={() => setSelectedZookeeper(zookeeper)}
                     >
-                      View adopted animals
+                      View Assigned animals
                     </button>
                   </td>
                 </tr>
@@ -172,7 +187,7 @@ export default function ZookeepersList() {
                 onClick={() => setCurrentPage(num)}
                 className={`px-3 py-1 rounded-lg ${
                   currentPage === num
-                    ? "bg-purple-200 text-purple-800"
+                    ? "bg-[#7b6fb1] text-white"
                     : "hover:bg-gray-200"
                 }`}
               >
@@ -197,7 +212,7 @@ export default function ZookeepersList() {
           <div className="bg-[#cbcbe2] p-8 rounded-lg shadow-lg w-1/2">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-semibold mx-auto">
-                Animals Adopted by {selectedZookeeper.name}
+                Animals Assigned by {selectedZookeeper.name}
               </h3>
               <button
                 onClick={() => setSelectedZookeeper(null)}
@@ -320,7 +335,7 @@ export default function ZookeepersList() {
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-purple-200 text-purple-700 rounded-lg"
+                  className="px-4 py-2 bg-[#7b6fb1] text-white rounded-lg hover:bg-[#9a89c8]"
                 >
                   Add Zookeeper
                 </button>

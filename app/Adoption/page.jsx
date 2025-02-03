@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import Image from "next/image";
 import Link from "next/link";
 import { FaSort, FaFilter, FaSearch } from "react-icons/fa"; // Importing icons
+import { motion } from "framer-motion"; // Importing motion from framer-motion
 
 const Adoption = () => {
   const animals = [
@@ -132,7 +133,7 @@ const Adoption = () => {
   return (
     <>
       <Navbar />
-      <div className="bg-gradient-to-br from-[#f4f2fa] via-white to-[#eae6f8] w-full min-h-screen py-10">
+      <div className="bg-gradient-to-br from-[#f4f2fa] via-[#e0d9f3] to-[#d1c8f0]  w-full min-h-screen py-10">
         <div className="max-w-screen-xl mx-auto text-center">
           <h1 className="text-4xl font-bold text-[#7b6fb1] mb-4">
             Meet Today&apos;s Zoo Pals Waiting for You!
@@ -143,7 +144,12 @@ const Adoption = () => {
           </p>
 
           {/* Filters Row */}
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-6">
+          <motion.div
+            className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
             {/* Sort By */}
             <div className="relative">
               <select
@@ -178,37 +184,48 @@ const Adoption = () => {
             </div>
 
             {/* Search Bar */}
-            <div className="relative flex items-center border border-gray-300 rounded-md px-4 py-2">
+            <div className="relative flex items-center border border-gray-300 bg-white rounded-md px-4 py-2">
               <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={handleSearch}
                 placeholder="Search by name..."
-                className="ml-10 outline-none text-gray-800"
+                className="ml-5 outline-none text-gray-800 w-full border-0 bg-tran"
               />
             </div>
-          </div>
+          </motion.div>
 
           {/* Animal Cards */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
             {sortedAnimals.length > 0 ? (
               sortedAnimals.map((animal) => (
-                <div
+                <motion.div
                   key={animal.id}
-                  className="relative w-70 rounded-lg overflow-hidden shadow-lg border border-gray-200"
+                  className="relative w-75 rounded-lg overflow-hidden shadow-lg border border-gray-200"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
                 >
-                  <div className="h-64">
+                  <div className="h-66">
                     <Image
                       src={animal.imageUrl}
                       alt={animal.commonName}
                       width={500}
                       height={500}
-                      className="object-cover w-full h-full"
+                      className="object-cover w-full h-96"
                     />
                   </div>
                   <div className="absolute bottom-2 left-2 right-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-2 flex justify-between items-center">
-                    <p className="text-xs text-white/80">{animal.commonName}</p>
+                    <div>
+                      <p className="text-md text-left font-semibold text-white tracking-wide drop-shadow-md">
+                        {animal.name}
+                      </p>
+                      <p className="text-xs text-white/80 italic tracking-wide">
+                        {animal.commonName}
+                      </p>
+                    </div>
+
                     <Link
                       href={`/pets/${animal.id}`}
                       className="text-xs text-white bg-black/20 px-3 py-1 rounded-lg"
@@ -216,7 +233,7 @@ const Adoption = () => {
                       More Info
                     </Link>
                   </div>
-                </div>
+                </motion.div>
               ))
             ) : (
               <p className="col-span-3 text-gray-600 text-lg">

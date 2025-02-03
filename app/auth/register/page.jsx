@@ -11,6 +11,7 @@ const Register = () => {
     email: "",
     password: "",
     confirmPassword: "",
+    phoneNumber: "",
   });
 
   const [error, setError] = useState(""); // For handling error messages
@@ -40,6 +41,7 @@ const Register = () => {
       name: formData.username,
       email: formData.email,
       password: formData.password,
+      phone: formData.phoneNumber,
     };
 
     try {
@@ -76,7 +78,7 @@ const Register = () => {
   return (
     <>
       <Navbar />
-      <section className="bg-gray-50 min-h-screen flex items-center flex-col">
+      <section className="bg-gradient-to-br from-[#f4f2fa] via-[#e0d9f3] to-[#d1c8f0] min-h-screen flex items-center flex-col">
         <div className="bg-gray-100 flex rounded-2xl shadow-lg max-w-3xl p-5 items-center mt-20">
           <div className="md:w-1/2 px-8 md:px-16">
             <h2 className="font-bold text-2xl text-[#7b6fb1]">Register</h2>
@@ -102,6 +104,15 @@ const Register = () => {
                 value={formData.email}
                 onChange={handleChange}
               />
+              <input
+                className="p-2 rounded-xl border"
+                type="text"
+                name="phoneNumber"
+                placeholder="Phone Number"
+                value={formData.phoneNumber}
+                onChange={handleChange}
+              />
+
               <div className="relative">
                 <input
                   className="p-2 rounded-xl border w-full"
@@ -153,7 +164,7 @@ const Register = () => {
               height={500}
               alt="Register Image"
               className="rounded-2xl h-[500px] w-full object-cover"
-              src="/images/register_image.jpg"
+              src="/images/signup.jpg"
             />
           </div>
         </div>

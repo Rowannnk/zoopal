@@ -1,23 +1,38 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import Image from "next/image";
 import Swal from "sweetalert2";
+import { motion } from "framer-motion";
 
 const Appointment = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAnimal, setSelectedAnimal] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState("");
+  const [user, setUser] = useState(null);
 
-  const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   const handleAnimalSelect = (animal) => setSelectedAnimal(animal);
   const handleDateChange = (newDate) => setSelectedDate(newDate);
   const handleTimeChange = (event) => setSelectedTime(event.target.value);
+
+  useEffect(() => {
+    const savedUser = JSON.parse(localStorage.getItem("user"));
+    if (savedUser) {
+      setUser(savedUser);
+    }
+  }, []);
+  const openModal = () => {
+    if (user.role !== "user") {
+      swal("Oops!", "You cannot make appoinemnt.You are not user!", "warning");
+    } else {
+      setIsModalOpen(true);
+    }
+  };
 
   const timeSlots = [
     "09:00 AM",
@@ -122,23 +137,39 @@ const Appointment = () => {
   return (
     <>
       <Navbar />
-      <div className="relative min-h-screen overflow-hidden bg-[#f4f2fa]">
+      <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#f4f2fa] via-[#e0d9f3] to-[#d1c8f0] ">
         <div className="relative z-10 max-w-4xl mx-auto px-6 py-20 text-[#7b6fb1]">
-          <h1 className="text-4xl font-bold mb-6 text-center">
-            Meet Your Adopted Pal!
-          </h1>
-          <p className="text-lg leading-relaxed mb-10 text-left">
+          <motion.h1
+            className="text-4xl font-bold mb-6 text-center"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            Meet Your Pal !
+          </motion.h1>
+          <motion.p
+            className="text-lg leading-relaxed mb-10 text-left"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+          >
             At AdoptAZooPal.com, we believe in connecting our adopters with the
             animals they support. Whether here to meet your adopted animal up
             close, take a behind-the-scenes tour, or just spend some quality
             time with your new pal, weve made it easy to schedule an
             unforgettable experience.
-          </p>
+          </motion.p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 text-left">
             <div>
-              <h2 className="text-xl font-semibold mb-3">
+              <motion.h2
+                className="text-xl font-semibold mb-3"
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                {" "}
                 Why Book an Appointment?
-              </h2>
+              </motion.h2>
               <ul className="list-disc ml-6 space-y-3">
                 <li>
                   Exclusive Meet & Greets: Spend quality time with your adopted
@@ -155,9 +186,15 @@ const Appointment = () => {
               </ul>
             </div>
             <div>
-              <h2 className="text-xl font-semibold mb-3">
+              <motion.h2
+                className="text-xl font-semibold mb-3"
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                {" "}
                 Your Appointment Includes:
-              </h2>
+              </motion.h2>
               <ul className="list-disc ml-6 space-y-3">
                 <li>
                   Personal Animal Time: Depending on the animal, you might get
@@ -176,12 +213,15 @@ const Appointment = () => {
           </div>
 
           <div className="mt-10 text-right">
-            <button
+            <motion.button
               className="px-8 py-4 bg-[#7b6fb1] text-white font-semibold rounded-full shadow-lg hover:bg-opacity-90"
               onClick={openModal}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
             >
               {"Let's meet'em!!"}
-            </button>
+            </motion.button>
           </div>
         </div>
 
@@ -224,7 +264,7 @@ const Appointment = () => {
                             height={40}
                             className="rounded-md"
                           />
-                          <span>{animal.commonName}</span>
+                          <span>{animal.name}</span>
                         </button>
                       ))}
                     </div>

@@ -500,7 +500,7 @@ export default function ProfilePage() {
     if (userData) {
       const user = JSON.parse(userData);
       setName(user.name);
-      setPhone(user.phone || ""); // Use a default phone if not available
+      setPhone(user.phoneNumber || ""); // Use a default phone if not available
       setEmail(user.email || ""); // Use a default email if not available
     }
   }, []);

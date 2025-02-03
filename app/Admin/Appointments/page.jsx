@@ -93,7 +93,7 @@ export default function Appointments() {
   const appointmentsPerPage = 10;
 
   const filteredAppointments = AppointmentList.filter((appointment) =>
-    appointment.username.toLowerCase().includes(search.toLowerCase())
+    appointment.animalname.toLowerCase().includes(search.toLowerCase())
   );
 
   const indexOfLastAppointment = currentPage * appointmentsPerPage;
@@ -109,7 +109,7 @@ export default function Appointments() {
   return (
     <>
       <Navbar />
-      <div className="w-full p-8">
+      <div className="w-full p-8 bg-gradient-to-br from-[#f4f2fa] via-[#e0d9f3] to-[#d1c8f0] h-screen">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-semibold">Appointments</h2>
           <div className="relative">
@@ -127,31 +127,31 @@ export default function Appointments() {
           <table className="w-full bg-white border rounded-lg">
             <thead>
               <tr className="bg-[#cecde1]">
-                <th className="p-2 text-left w-1/2">Username</th>
-                <th className="p-2 text-left w-1/6">Animal</th>
-                <th className="p-2 text-left w-1/6">Made On</th>
-                <th className="p-2 text-left w-1/6">Appointment Date</th>
-                <th className="p-2 text-left w-1/6">Status</th>
+                <th className="p-4 text-left w-1/2">Username</th>
+                <th className="p-4 text-left w-1/6">Animal Name</th>
+                <th className="p-4 text-left w-1/6">Made On</th>
+                <th className="p-4 text-left w-1/6">Appointment Date</th>
+                <th className="p-4 text-left w-1/6">Status</th>
               </tr>
             </thead>
             <tbody>
               {currentAppointments.map((appointment) => (
                 <tr key={appointment.id} className="border-t">
-                  <td className="p-2 flex items-center gap-2">
+                  <td className="p-4 flex items-center gap-2">
                     <span className="bg-gray-300 rounded-full w-6 h-6 flex items-center justify-center">
                       👤
                     </span>
                     {appointment.username}
                   </td>
-                  <td className="p-2">{appointment.animalname}</td>
-                  <td className="p-2">
+                  <td className="p-4">{appointment.animalname}</td>
+                  <td className="p-4">
                     {new Date(appointment.madeOn).toLocaleString("en-GB", {
                       day: "2-digit",
                       month: "2-digit",
                       year: "numeric",
                     })}
                   </td>
-                  <td className="p-2">
+                  <td className="p-4">
                     {new Date(appointment.appointmentDate).toLocaleString(
                       "en-GB",
                       {
@@ -201,7 +201,7 @@ export default function Appointments() {
                 onClick={() => setCurrentPage(num)}
                 className={`px-3 py-1 rounded-lg ${
                   currentPage === num
-                    ? "bg-purple-200 text-purple-800"
+                    ? "bg-[#7b6fb1] text-white"
                     : "hover:bg-gray-200"
                 }`}
               >

@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(request) {
   try {
-    const { name, email, password } = await request.json();
+    const { name, email, password, phoneNumber } = await request.json();
 
     await dbConnect();
 
@@ -22,6 +22,7 @@ export async function POST(request) {
       name,
       email,
       password,
+      phoneNumber,
       role: "user",
     });
 
@@ -33,6 +34,7 @@ export async function POST(request) {
           id: newUser._id,
           name: newUser.name,
           email: newUser.email,
+          phoneNumber: newUser.phoneNumber,
           role: newUser.role,
         },
       },

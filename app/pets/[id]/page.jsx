@@ -2,7 +2,7 @@
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import Navbar from "@/app/components/Navbar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaPaw, FaMars, FaTree } from "react-icons/fa";
 import { motion } from "framer-motion";
 import swal from "sweetalert";
@@ -94,6 +94,14 @@ const PetDetail = () => {
   const [isOptionsVisible, setIsOptionsVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Choose Options");
   const [isAdopted, setIsAdopted] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const savedUser = JSON.parse(localStorage.getItem("user"));
+    if (savedUser) {
+      setUser(savedUser);
+    }
+  }, []);
 
   const toggleOptions = () => {
     setIsOptionsVisible((prev) => !prev);
@@ -106,8 +114,11 @@ const PetDetail = () => {
 
   const animal = animals.find((a) => a.id === parseInt(id));
 
-  // New adopt handler using SweetAlert
   const handleAdoptNow = () => {
+    if (user.role !== "user") {
+      swal("Oops!", "You cannot adopt.You are not user !", "warning");
+      return;
+    }
     if (selectedOption === "Choose Options") {
       swal("Oops!", "Please choose an option before adopting.", "warning");
     } else {
@@ -118,7 +129,7 @@ const PetDetail = () => {
         buttons: ["Cancel", "OK"],
       }).then((willAdopt) => {
         if (willAdopt) {
-          setIsAdopted(true); // Update state to reflect adoption
+          setIsAdopted(true);
         }
       });
     }
@@ -141,14 +152,14 @@ const PetDetail = () => {
   return (
     <>
       <Navbar />
-      <div className="bg-gradient-to-br from-[#f4f2fa] via-white to-[#eae6f8] w-full min-h-screen py-10">
+      <div className="bg-gradient-to-br from-[#f4f2fa] via-[#e0d9f3] to-[#d1c8f0] w-full min-h-screen py-10">
         <div className="max-w-screen-xl mx-auto flex flex-col md:flex-row items-center gap-10">
           <div className="md:w-1/2 pr-20">
             <h1 className="text-4xl font-bold text-[#7b6fb1] mb-4">
-              {animal.commonName}
+              {animal.name}
             </h1>
             <p className="text-lg text-gray-700 mb-2">
-              <strong>Name:</strong> {animal.name}
+              <strong>Common Name:</strong> {animal.commonName}
             </p>
             <p className="text-lg text-gray-700 mb-2">
               <strong>Birthdate:</strong> {animal.birthdate}
@@ -181,7 +192,7 @@ const PetDetail = () => {
               <button
                 className={`px-6 py-4 rounded-full ${
                   isAdopted
-                    ? "bg-purple-400 cursor-not-allowed text-white"
+                    ? "bg-pink-300 cursor-not-allowed text-white"
                     : "bg-[#7b6fb1] hover:bg-[#504394] text-white"
                 }`}
                 onClick={handleAdoptNow}
@@ -194,7 +205,7 @@ const PetDetail = () => {
                 <button
                   className={`px-6 py-4 rounded-full border ${
                     isAdopted
-                      ? "bg-blue-400 text-white cursor-not-allowed"
+                      ? "bg-blue-300 text-white cursor-not-allowed"
                       : "bg-gray-200"
                   }`}
                   onClick={toggleOptions}
@@ -224,14 +235,24 @@ const PetDetail = () => {
             </div>
           </div>
           <div className="md:w-1/2 flex justify-center h-full">
-            <Image
+            {/* <Image
               src={animal.imageUrl}
               alt={animal.commonName}
               width={400}
               height={300}
               sizes="100vw"
               className="object-cover rounded-xl shadow-md"
-            />
+            /> */}
+            <div className="flex justify-center items-center mb-4 sm:mb-0 bg-gray-200 rounded-lg p-8 ">
+              <Image
+                src={animal.imageUrl || "/placeholder-image.png"}
+                alt={`${animal.commonName}'s latest photo`}
+                width={800}
+                height={500}
+                sizes="100vw"
+                className="rounded-xl shadow-md object-cover h-full"
+              />
+            </div>
           </div>
         </div>
       </div>

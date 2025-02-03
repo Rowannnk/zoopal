@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import Image from "next/image";
+import Swal from "sweetalert2";
+import { motion } from "framer-motion";
 
 export default function AppointmentCard() {
   const [appointments, setAppointments] = useState([
@@ -9,24 +11,27 @@ export default function AppointmentCard() {
       id: 1,
       date: "Feb 10, 2025",
       time: "10:00 AM",
-      animal: "Snow Leopard",
-      status: "Confirmed",
+      commonName: "Snow Leopard",
+      name: "Mr Snowy",
+      status: "Done",
       imageUrl: "/images/snow_leopard.jpg",
     },
     {
       id: 2,
       date: "Mar 5, 2025",
       time: "2:00 PM",
-      animal: "Red Panda",
-      status: "Pending",
+      commonName: "Red Panda",
+      name: "Mrs Panda",
+      status: "Did not show up",
       imageUrl: "/images/red_panda.jpg",
     },
     {
       id: 3,
       date: "Apr 20, 2025",
       time: "1:30 PM",
-      animal: "Bengal Tiger",
-      status: "Confirmed",
+      commonName: "Bengal Tiger",
+      name: "Mr Berlin",
+      status: "Upcoming",
       imageUrl: "/images/bengal_tiger.jpg",
     },
   ]);
@@ -40,12 +45,26 @@ export default function AppointmentCard() {
     const appointmentToUpdate = appointments.find(
       (appt) => appt.id === appointmentId
     );
-    if (appointmentToUpdate) {
-      setSelectedAppointment(appointmentToUpdate);
-      setUpdatedDate(appointmentToUpdate.date);
-      setUpdatedTime(appointmentToUpdate.time);
-      setShowUpdateModal(true);
+
+    if (!appointmentToUpdate) return;
+
+    if (
+      appointmentToUpdate.status === "Done" ||
+      appointmentToUpdate.status === "Did not show up"
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Cannot Update",
+        text: `Appointments marked as '${appointmentToUpdate.status}' cannot be updated.`,
+        confirmButtonColor: "#7b6fb1",
+      });
+      return;
     }
+
+    setSelectedAppointment(appointmentToUpdate);
+    setUpdatedDate(appointmentToUpdate.date);
+    setUpdatedTime(appointmentToUpdate.time);
+    setShowUpdateModal(true);
   };
   const handleCancelAppointment = (appointmentId) => {
     setAppointments((prevAppointments) =>
@@ -68,24 +87,37 @@ export default function AppointmentCard() {
     <>
       <Navbar />
       <hr />
-      <div className="relative min-h-screen overflow-hidden bg-white">
+      <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#f4f2fa] via-[#e0d9f3] to-[#d1c8f0]">
         <div className="relative z-10 max-w-4xl mx-auto px-6 py-20 text-[#7b6fb1]">
-          <h1 className="text-4xl font-bold mb-6 text-center">
+          <motion.h1
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-4xl font-bold mb-6 text-center"
+          >
             Get Ready To Meet Your Pals!
-          </h1>
-          <p className="text-lg leading-relaxed mb-10 text-center">
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-lg leading-relaxed mb-10 text-center"
+          >
             At AdoptAZooPal.com, we believe in connecting our adopters with the
             animals they support. Whether here to meet your adopted animal up
             close, take a behind-the-scenes tour, or just spend some quality
             time with your new pal, we have made it easy to schedule an
             unforgettable experience.
-          </p>
+          </motion.p>
         </div>
 
         {/* Appointment Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-8 mx-20">
           {appointments.map((appointment) => (
-            <div
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
               key={appointment.id}
               className="w-full max-w-[500px] bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 mx-auto"
             >
@@ -94,17 +126,17 @@ export default function AppointmentCard() {
                   <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-purple-500">
                     <Image
                       src={appointment.imageUrl}
-                      alt={appointment.animal}
-                      width={300}
-                      height={200}
+                      alt={appointment.name}
+                      width={400}
+                      height={300}
                       className="w-full h-full object-cover"
                     />
                   </div>
                   <div>
-                    <h4 className="text-sm font-semibold text-gray-800">
-                      {appointment.animal}
+                    <h4 className="text-lg font-semibold text-gray-800">
+                      {appointment.name}
                     </h4>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-md text-[#7b6fb1] text-bold">
                       {appointment.date} at {appointment.time}
                     </p>
                   </div>
@@ -112,14 +144,22 @@ export default function AppointmentCard() {
               </div>
 
               <div className="p-4">
-                <p className="text-sm text-gray-600">
+                <p className="text-md text-gray-600">
                   Status:{" "}
-                  <span className="font-semibold text-[#7b6fb1]">
+                  <span
+                    className={`px-2 py-1 rounded-full text-sm font-semibold ${
+                      appointment.status === "Done"
+                        ? "bg-green-200 text-green-800"
+                        : appointment.status === "Did not show up"
+                        ? "bg-red-200 text-red-800"
+                        : "bg-gray-200 text-gray-800"
+                    }`}
+                  >
                     {appointment.status}
                   </span>
                 </p>
                 <div className="mt-2 flex items-center gap-2">
-                  <span className="text-xs text-gray-500">
+                  <span className="text-md text-gray-500">
                     Get ready for a wild experience!
                   </span>
                   <span role="img" aria-label="paw">
@@ -130,19 +170,19 @@ export default function AppointmentCard() {
 
               <div className="flex justify-between p-4 border-t border-gray-200">
                 <button
-                  className="px-4 py-2 text-sm font-medium text-[#7b6fb1] hover:bg-purple-50 rounded-lg"
+                  className="px-4 py-2 text-md font-medium text-[#7b6fb1] hover:bg-purple-50 rounded-lg"
                   onClick={() => handleUpdateAppointment(appointment.id)}
                 >
                   Update
                 </button>
                 <button
-                  className="px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 rounded-lg"
+                  className="px-4 py-2 text-md font-medium text-gray-500 hover:bg-gray-100 rounded-lg"
                   onClick={() => handleCancelAppointment(appointment.id)}
                 >
                   Cancel
                 </button>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 

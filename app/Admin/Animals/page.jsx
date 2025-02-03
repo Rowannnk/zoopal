@@ -1,332 +1,161 @@
-// "use client";
-// import Navbar from "@/app/components/Navbar";
-// import React, { useState } from "react";
-// import { FiSearch } from "react-icons/fi";
-
-// const animals = [
-//   {
-//     id: 1,
-//     name: "Ava",
-//     commonName: "Deer",
-//     species: "Cervidae",
-//     age: 2,
-//     gender: "Female",
-//   },
-//   {
-//     id: 2,
-//     name: "Animal Name",
-//     commonName: "Cell Text",
-//     species: "Cell Text",
-//     age: "Cell Text",
-//     gender: "Cell Text",
-//   },
-//   {
-//     id: 3,
-//     name: "Animal Name",
-//     commonName: "Cell Text",
-//     species: "Cell Text",
-//     age: "Cell Text",
-//     gender: "Cell Text",
-//   },
-//   {
-//     id: 4,
-//     name: "Animal Name",
-//     commonName: "Cell Text",
-//     species: "Cell Text",
-//     age: "Cell Text",
-//     gender: "Cell Text",
-//   },
-//   {
-//     id: 5,
-//     name: "Animal Name",
-//     commonName: "Cell Text",
-//     species: "Cell Text",
-//     age: "Cell Text",
-//     gender: "Cell Text",
-//   },
-//   {
-//     id: 6,
-//     name: "Animal Name",
-//     commonName: "Cell Text",
-//     species: "Cell Text",
-//     age: "Cell Text",
-//     gender: "Cell Text",
-//   },
-//   {
-//     id: 7,
-//     name: "Animal Name",
-//     commonName: "Cell Text",
-//     species: "Cell Text",
-//     age: "Cell Text",
-//     gender: "Cell Text",
-//   },
-//   {
-//     id: 8,
-//     name: "Animal Name",
-//     commonName: "Cell Text",
-//     species: "Cell Text",
-//     age: "Cell Text",
-//     gender: "Cell Text",
-//   },
-// ];
-
-// const PAGE_SIZE = 10;
-
-// const AnimalsList = () => {
-//   const [currentPage, setCurrentPage] = useState(1);
-
-//   const totalPages = Math.ceil(animals.length / PAGE_SIZE);
-//   const currentAnimals = animals.slice(
-//     (currentPage - 1) * PAGE_SIZE,
-//     currentPage * PAGE_SIZE
-//   );
-
-//   return (
-//     <>
-//       <Navbar />
-//       <div className="w-full p-8">
-//         {/* Header */}
-//         <div className="flex justify-between items-center mb-4">
-//           <h2 className="text-2xl font-semibold">Animals</h2>
-//           <div className="flex items-center gap-2">
-//             <button className="bg-purple-200 text-purple-800 px-4 py-2 rounded-lg hover:bg-purple-400">
-//               + Add a New Animal
-//             </button>
-//             <button className="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700">
-//               Delete
-//             </button>
-//             <div className="relative">
-//               <input
-//                 type="text"
-//                 placeholder="Search"
-//                 className="pl-8 pr-4 py-2 border rounded-lg outline-none"
-//               />
-//               <FiSearch className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500" />
-//             </div>
-//           </div>
-//         </div>
-
-//         {/* Table */}
-//         <div className="overflow-x-auto bg-white shadow-md rounded-lg border border-gray-200">
-//           <table className="w-full">
-//             <thead>
-//               <tr className="bg-[#cecde1] text-left uppercase text-sm">
-//                 <th className="py-3 px-4">Name</th>
-//                 <th className="py-3 px-4">Common Name</th>
-//                 <th className="py-3 px-4">Species</th>
-//                 <th className="py-3 px-4">Age</th>
-//                 <th className="py-3 px-4">Gender</th>
-//                 <th className="py-3 px-4"></th>
-//               </tr>
-//             </thead>
-//             <tbody>
-//               {currentAnimals.map((animal) => (
-//                 <tr
-//                   key={animal.id}
-//                   className="border-b hover:bg-gray-50 transition"
-//                 >
-//                   <td className="py-3 px-4 flex items-center gap-2">
-//                     <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
-//                       🐾
-//                     </div>
-//                     {animal.name}
-//                   </td>
-//                   <td className="py-3 px-4">{animal.commonName}</td>
-//                   <td className="py-3 px-4">{animal.species}</td>
-//                   <td className="py-3 px-4">{animal.age}</td>
-//                   <td className="py-3 px-4">{animal.gender}</td>
-//                   <td className="py-3 px-4">
-//                     <button className="text-gray-600 border border-gray-300 px-3 py-1 rounded-lg hover:bg-gray-100">
-//                       Edit
-//                     </button>
-//                   </td>
-//                 </tr>
-//               ))}
-//             </tbody>
-//           </table>
-//         </div>
-
-//         {/* Pagination */}
-//         <div className="flex justify-between items-center mt-4 text-gray-600">
-//           <button
-//             disabled={currentPage === 1}
-//             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-//             className="hover:text-gray-900 disabled:text-gray-400"
-//           >
-//             &larr; Previous
-//           </button>
-//           <div className="flex gap-2">
-//             {[...Array(totalPages)].map((_, index) => (
-//               <button
-//                 key={index}
-//                 onClick={() => setCurrentPage(index + 1)}
-//                 className={`px-3 py-1 rounded-lg ${
-//                   currentPage === index + 1
-//                     ? "bg-purple-200 text-purple-800"
-//                     : "hover:bg-gray-200"
-//                 }`}
-//               >
-//                 {index + 1}
-//               </button>
-//             ))}
-//           </div>
-//           <button
-//             disabled={currentPage === totalPages}
-//             onClick={() =>
-//               setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-//             }
-//             className="hover:text-gray-900 disabled:text-gray-400"
-//           >
-//             Next &rarr;
-//           </button>
-//         </div>
-//       </div>
-//     </>
-//   );
-// };
-
-// export default AnimalsList;
 "use client";
 import Navbar from "@/app/components/Navbar";
 import Image from "next/image";
 import React, { useState } from "react";
 import { FiSearch } from "react-icons/fi";
+import { FiPlus } from "react-icons/fi";
+import Swal from "sweetalert2";
 
 const initialAnimals = [
   {
     id: 1,
     name: "Ava",
     commonName: "Deer",
-    species: "Cervidae",
     age: 2,
     gender: "Female",
     assignedZooKeeper: "John Doe",
+    birthdate: "2022-02-15",
+    status: "Moderately Concerned",
   },
   {
     id: 2,
     name: "Leo",
     commonName: "Lion",
-    species: "Panthera leo",
     age: 5,
     gender: "Male",
     assignedZooKeeper: "Jane Smith",
+    birthdate: "2018-06-01",
+    status: "Endangered",
   },
   {
     id: 3,
     name: "Bella",
     commonName: "Elephant",
-    species: "Loxodonta",
     age: 10,
     gender: "Female",
     assignedZooKeeper: "Alice Johnson",
+    birthdate: "2013-11-10",
+    status: "Endangered",
   },
   {
     id: 4,
     name: "Charlie",
     commonName: "Wolf",
-    species: "Canis lupus",
     age: 4,
     gender: "Male",
     assignedZooKeeper: "Bob Brown",
+    birthdate: "2019-03-20",
+    status: "Moderately Concerned",
   },
   {
     id: 5,
     name: "Milo",
     commonName: "Tiger",
-    species: "Panthera tigris",
     age: 3,
     gender: "Male",
     assignedZooKeeper: "Sara Davis",
+    birthdate: "2021-07-15",
+    status: "Endangered",
   },
   {
     id: 6,
     name: "Luna",
     commonName: "Panda",
-    species: "Ailuropoda melanoleuca",
     age: 6,
     gender: "Female",
     assignedZooKeeper: "Mike Wilson",
+    birthdate: "2017-12-25",
+    status: "Endangered",
   },
   {
     id: 7,
     name: "Max",
     commonName: "Giraffe",
-    species: "Giraffa camelopardalis",
     age: 7,
     gender: "Male",
     assignedZooKeeper: "Emma Clark",
+    birthdate: "2016-04-10",
+    status: "Moderately Concerned",
   },
   {
     id: 8,
     name: "Zara",
     commonName: "Zebra",
-    species: "Equus zebra",
     age: 4,
     gender: "Female",
     assignedZooKeeper: "David Lee",
+    birthdate: "2019-08-18",
+    status: "No adoptive owner",
   },
   {
     id: 9,
     name: "Oliver",
     commonName: "Kangaroo",
-    species: "Macropus rufus",
     age: 8,
     gender: "Male",
     assignedZooKeeper: "Chris Martin",
+    birthdate: "2015-03-05",
+    status: "No adoptive owner",
   },
   {
     id: 10,
     name: "Ella",
     commonName: "Koala",
-    species: "Phascolarctos cinereus",
     age: 5,
     gender: "Female",
     assignedZooKeeper: "Natalie Walker",
+    birthdate: "2018-10-20",
+    status: "Endangered",
   },
   {
     id: 11,
     name: "Rocky",
     commonName: "Raccoon",
-    species: "Procyon lotor",
     age: 3,
     gender: "Male",
     assignedZooKeeper: "Frank Harris",
+    birthdate: "2020-09-12",
+    status: "No adoptive owner",
   },
   {
     id: 12,
     name: "Nala",
     commonName: "Cheetah",
-    species: "Acinonyx jubatus",
     age: 4,
     gender: "Female",
     assignedZooKeeper: "Grace Evans",
+    birthdate: "2019-05-30",
+    status: "Endangered",
   },
   {
     id: 13,
     name: "Sasha",
     commonName: "Leopard",
-    species: "Panthera pardus",
     age: 6,
     gender: "Female",
     assignedZooKeeper: "Olivia Scott",
+    birthdate: "2017-02-11",
+    status: "Moderately Concerned",
   },
   {
     id: 14,
     name: "Jack",
     commonName: "Polar Bear",
-    species: "Ursus maritimus",
     age: 9,
     gender: "Male",
     assignedZooKeeper: "Lucas Young",
+    birthdate: "2014-08-25",
+    status: "Endangered",
   },
   {
     id: 15,
     name: "Daisy",
     commonName: "Sloth",
-    species: "Bradypus variegatus",
     age: 12,
     gender: "Female",
     assignedZooKeeper: "Ethan King",
+    birthdate: "2011-01-19",
+    status: "No adoptive owner",
   },
 ];
 
@@ -336,6 +165,7 @@ const AnimalsList = () => {
   const [animals, setAnimals] = useState(initialAnimals);
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showNameModal, setShowNameModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [image, setImage] = useState(null);
 
@@ -347,6 +177,25 @@ const AnimalsList = () => {
     age: "",
     gender: "",
   });
+
+  const [customNames, setCustomNames] = useState([
+    "Deer",
+    "Lion",
+    "Elephant",
+    "Wolf",
+    "Tiger",
+    "Panda",
+  ]);
+  const [newCommonName, setNewCommonName] = useState("");
+
+  const addNewCommonName = () => {
+    if (newCommonName && !customNames.includes(newCommonName)) {
+      setCustomNames([...customNames, newCommonName]);
+      setFormData({ ...formData, commonName: newCommonName });
+      setNewCommonName("");
+      setShowNameModal(false);
+    }
+  };
 
   const openModal = (animal = null) => {
     setSelectedAnimal(animal);
@@ -370,21 +219,48 @@ const AnimalsList = () => {
     setSelectedAnimal(null);
   };
 
-  const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
   const handleSave = () => {
-    if (selectedAnimal) {
-      setAnimals((prev) =>
-        prev.map((a) =>
-          a.id === selectedAnimal.id ? { ...formData, id: a.id } : a
-        )
-      );
-    } else {
-      setAnimals((prev) => [...prev, { ...formData, id: prev.length + 1 }]);
-    }
-    closeModal();
+    Swal.fire({
+      title: selectedAnimal
+        ? "Are you sure you want to update this animal?"
+        : "Are you sure you want to add this animal?",
+      text: selectedAnimal
+        ? "Changes will be saved."
+        : "The animal will be added to the list.",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: selectedAnimal ? "Yes, update it!" : "Yes, add it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (selectedAnimal) {
+          setAnimals((prev) =>
+            prev.map((a) =>
+              a.id === selectedAnimal.id ? { ...formData, id: a.id } : a
+            )
+          );
+        } else {
+          setAnimals((prev) => [{ ...formData, id: prev.length + 1 }, ...prev]);
+        }
+        Swal.fire(
+          selectedAnimal ? "Updated!" : "Added!",
+          selectedAnimal
+            ? "The animal has been updated."
+            : "The new animal has been added.",
+          "success"
+        );
+        closeModal();
+      }
+    });
   };
 
   const filteredAnimals = animals.filter((animal) =>
@@ -414,26 +290,41 @@ const AnimalsList = () => {
   };
 
   const handleDelete = (id) => {
-    const confirmed = window.confirm(
-      "Are you sure you want to delete this animal?"
-    );
-    if (confirmed) {
-      setAnimals((prev) => prev.filter((animal) => animal.id !== id));
-    }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this action!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setAnimals((prev) => prev.filter((animal) => animal.id !== id));
+        Swal.fire("Deleted!", "The animal has been deleted.", "success");
+      }
+    });
+  };
+  const handleDropdownChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
   return (
     <>
       <Navbar />
-      <div className="w-full p-8">
+      <div className="w-full p-8 bg-gradient-to-br from-[#f4f2fa] via-[#e0d9f3] to-[#d1c8f0] h-screen">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-semibold">Animals</h2>
           <div className="flex items-center gap-2">
             <button
               onClick={() => openModal()}
-              className="bg-purple-200 text-purple-800 px-4 py-2 rounded-lg hover:bg-purple-400"
+              className="bg-[#7b6fb1] text-white px-4 py-2 rounded-lg hover:bg-[#9a89c8]"
             >
-              + Add a New Animal
+              Add a New Animal
             </button>
             <div className="relative">
               <input
@@ -452,12 +343,15 @@ const AnimalsList = () => {
           <table className="w-full">
             <thead>
               <tr className="bg-[#cecde1] text-left uppercase text-sm">
-                <th className="py-3 px-4">Name</th>
-                <th className="py-3 px-4">Common Name</th>
-                <th className="py-3 px-4">Species</th>
-                <th className="py-3 px-4">Age</th>
-                <th className="py-3 px-4">Gender</th>
-                <th className="py-3 px-4"></th>
+                <th className="p-4 w-1/3">Name</th>
+                <th className="p-4">Common Name</th>
+                <th className="p-4">Assigned Zookeeper</th>
+
+                <th className="p-4">Birthdate</th>
+                <th className="p-4">Age</th>
+                <th className="p-4">Gender</th>
+                <th className="p-4">Status</th>
+                <th className="p-4">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -466,17 +360,35 @@ const AnimalsList = () => {
                   key={animal.id}
                   className="border-b hover:bg-gray-50 transition"
                 >
-                  <td className="py-3 px-4 flex items-center gap-2">
+                  <td className="p-4 flex items-center gap-2">
                     <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
                       🐾
                     </div>
                     {animal.name}
                   </td>
-                  <td className="py-3 px-4">{animal.commonName}</td>
-                  <td className="py-3 px-4">{animal.species}</td>
-                  <td className="py-3 px-4">{animal.age}</td>
-                  <td className="py-3 px-4">{animal.gender}</td>
-                  <td className="py-3 px-4 space-x-2">
+                  <td className="p-4">{animal.commonName}</td>
+                  <td className="p-4">{animal.assignedZooKeeper}</td>
+
+                  <td className="p-4">{animal.birthdate}</td>
+                  <td className="p-4">{animal.age}</td>
+                  <td className="p-4">{animal.gender}</td>
+                  <td>
+                    <span
+                      className={`py-2 px-4 rounded-full ${
+                        animal.status === "Endangered"
+                          ? "bg-red-400 text-white"
+                          : animal.status === "Moderately Concerned"
+                          ? "bg-blue-400 text-white"
+                          : animal.status === "No adoptive owner"
+                          ? "bg-gray-400 text-white"
+                          : ""
+                      }`}
+                    >
+                      {animal.status}
+                    </span>
+                  </td>
+
+                  <td className="p-4 space-x-2">
                     <button
                       onClick={() => openModal(animal)}
                       className="text-gray-600 border border-gray-300 px-3 py-1 rounded-lg hover:bg-gray-100"
@@ -511,7 +423,7 @@ const AnimalsList = () => {
                 onClick={() => setCurrentPage(index + 1)}
                 className={`px-3 py-1 rounded-lg ${
                   currentPage === index + 1
-                    ? "bg-purple-200 text-purple-800"
+                    ? "bg-[#7b6fb1] text-white"
                     : "hover:bg-gray-200"
                 }`}
               >
@@ -548,24 +460,71 @@ const AnimalsList = () => {
                   placeholder="Name"
                   className="w-full mb-2 p-2 border rounded"
                 />
-                <input
-                  type="text"
-                  name="commonName"
-                  value={formData.commonName}
-                  onChange={handleInputChange}
-                  placeholder="Common Name"
-                  className="w-full mb-2 p-2 border rounded"
-                />
+                <div className="flex gap-2 ">
+                  <select
+                    className="border border-gray-300 rounded-lg p-1 text-sm w-4/5"
+                    value={formData.commonName}
+                    onChange={(e) =>
+                      setFormData({ ...formData, commonName: e.target.value })
+                    }
+                  >
+                    <option value="">Select Common Name</option>
+                    {customNames.map((name, index) => (
+                      <option key={index} value={name}>
+                        {name}
+                      </option>
+                    ))}
+                  </select>
+                  <button
+                    className="bg-[#7b6fb1] text-white p-2 mt-3 rounded-lg text-sm hover:bg-[#9a89c8] h-1/2 flex items-center"
+                    onClick={() => setShowNameModal(true)}
+                  >
+                    <FiPlus />
+                  </button>
+                </div>
+                {showNameModal && (
+                  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="bg-white p-6 rounded-lg shadow-lg w-80">
+                      <h2 className="text-lg font-semibold mb-3">
+                        Add Common Name
+                      </h2>
+                      <input
+                        type="text"
+                        className="border border-gray-300 rounded-lg p-2 w-full"
+                        placeholder="Enter new common name"
+                        value={newCommonName}
+                        onChange={(e) => setNewCommonName(e.target.value)}
+                      />
+                      <div className="flex justify-end gap-2 mt-4">
+                        <button
+                          className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm hover:bg-gray-400"
+                          onClick={() => setShowNameModal(false)}
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          className="bg-[#7b6fb1] text-white px-4 py-2 rounded-lg text-sm hover:bg-[#9a89c8]"
+                          onClick={addNewCommonName}
+                        >
+                          Add Name
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
               <div className="grid grid-cols-2 gap-4">
-                <input
-                  type="text"
+                <select
                   name="gender"
+                  id="gender"
                   value={formData.gender}
                   onChange={handleInputChange}
-                  placeholder="Gender"
-                  className="w-full mb-2 p-2 border rounded"
-                />
+                  className="border border-gray-300 rounded-lg p-1 text-sm"
+                >
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
                 <input
                   type="number"
                   name="age"
@@ -575,14 +534,30 @@ const AnimalsList = () => {
                   className="w-full mb-2 p-2 border rounded"
                 />
               </div>
-              <input
-                type="date"
-                name="birthdate"
-                value={formData.birthdate}
-                onChange={handleInputChange}
-                placeholder="Birthdate"
-                className="w-full mb-2 p-2 border rounded"
-              />
+              <div className="grid grid-cols-2 gap-4 ">
+                <select
+                  name="status"
+                  value={formData.status}
+                  onChange={handleDropdownChange}
+                  className="mt-1 block w-full p-1 text-sm border border-gray-300 rounded-md"
+                >
+                  <option value="">Select Status</option>
+                  <option value="Endangered">Endangered</option>
+                  <option value="Moderately Concerned">
+                    Moderately Concerned
+                  </option>
+                  <option value="No adoptive owner">No adoptive owner</option>
+                </select>
+                <input
+                  type="date"
+                  name="birthdate"
+                  value={formData.birthdate ? formData.birthdate : ""}
+                  onChange={handleInputChange}
+                  placeholder="Birthdate"
+                  className="w-full mb-2 p-2 border rounded"
+                />
+              </div>
+
               <textarea
                 name="description"
                 value={formData.description}
@@ -594,7 +569,7 @@ const AnimalsList = () => {
               <div className="flex space-x-4">
                 <button
                   onClick={handleSave}
-                  className="bg-purple-200 text-black px-4 py-2 rounded-lg"
+                  className="bg-[#7b6fb1] text-white px-4 py-2 rounded-lg hover:bg-[#9a89c8]"
                 >
                   {selectedAnimal ? "Edit Animal" : "Add Animal"}
                 </button>
@@ -635,7 +610,7 @@ const AnimalsList = () => {
                     className="px-4 py-2 border border-gray-300 rounded-lg w-1/2"
                     placeholder="Enter zoo keeper"
                   />
-                  <label className="bg-purple-200 py-2 px-4 rounded-full cursor-pointer">
+                  <label className="bg-[#7b6fb1] text-white py-2 px-4 rounded-full cursor-pointer hover:bg-[#9a89c8]">
                     <input
                       type="file"
                       accept="image/*"

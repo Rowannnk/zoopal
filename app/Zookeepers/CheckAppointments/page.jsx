@@ -9,7 +9,8 @@ export default function CheckAppointments() {
       id: 1,
       date: "2025-02-01",
       time: "10:00 AM",
-      animal: "Snow Leopard",
+      commonName: "Snow Leopard",
+      name: "Snowy",
       status: "Confirmed",
       type: "today",
       photoUrl: "/images/snow_leopard.jpg",
@@ -19,7 +20,9 @@ export default function CheckAppointments() {
       id: 2,
       date: "2025-02-03",
       time: "2:00 PM",
-      animal: "Red Panda",
+      commonName: "Red Panda",
+      name: "Mr Panda",
+
       status: "Pending",
       type: "upcoming",
       photoUrl: "/images/red_panda.jpg",
@@ -29,7 +32,8 @@ export default function CheckAppointments() {
       id: 3,
       date: "2025-02-03",
       time: "1:30 PM",
-      animal: "Bengal Tiger",
+      commonName: "Bengal Tiger",
+      name: "Mr Tiger",
       status: "Confirmed",
       type: "upcoming",
       photoUrl: "/images/bengal_tiger.jpg",
@@ -60,7 +64,7 @@ export default function CheckAppointments() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-100 py-10 px-10">
+      <div className="min-h-screen bg-gradient-to-br from-[#f4f2fa] via-[#e0d9f3] to-[#d1c8f0] py-10 px-10">
         <h1 className="text-4xl font-bold text-center text-[#7b6fb1] mb-6">
           Appointments {"-"} Animals in Your Care
         </h1>
@@ -76,7 +80,7 @@ export default function CheckAppointments() {
           ))}
         </div>
 
-        <div className="flex justify-center mt-6 border-b-2">
+        <div className="flex justify-center mt-6 border-b-2 border-gray-200 ">
           {["today", "upcoming"].map((tab) => (
             <button
               key={tab}
@@ -96,18 +100,18 @@ export default function CheckAppointments() {
           {filteredAppointments.map((appointment) => (
             <div
               key={appointment.id}
-              className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm relative"
+              className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl relative"
             >
               <Image
                 src={appointment.photoUrl}
-                alt={appointment.animal}
+                alt={appointment.name}
                 width={400}
                 height={300}
                 className="w-full h-60 object-cover rounded-t-lg"
               />
               <div className="p-5">
-                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
-                  {appointment.animal}
+                <h5 className="mb-2 text-2xl font-bold tracking-tight text-[#7b6fb1]">
+                  {appointment.name}
                 </h5>
                 <p className="mb-3 font-normal text-gray-700">
                   {appointment.date} at {appointment.time}
@@ -116,9 +120,7 @@ export default function CheckAppointments() {
                   Adoptive Owner: {appointment.adoptiveOwner}{" "}
                 </p>
 
-                {/* Flex container for status on the left and button on the right */}
                 <div className="flex justify-between items-center">
-                  {/* Left: Done / Didn't Show Up status */}
                   <div className="flex gap-3">
                     {["Done", "Didn't Show Up"].map((status) => (
                       <span
@@ -126,9 +128,9 @@ export default function CheckAppointments() {
                         className={`px-3 py-1 rounded-full text-white ${
                           appointment.status === status
                             ? status === "Done"
-                              ? "bg-green-300"
-                              : "bg-red-300"
-                            : "bg-gray-300"
+                              ? "bg-green-300 text-green-700"
+                              : "bg-red-300 text-red-700"
+                            : "bg-gray-300 text-gray-700"
                         }`}
                       >
                         {status}

@@ -62,7 +62,7 @@ const LogIn = () => {
   return (
     <>
       <Navbar />
-      <section className="bg-gray-50 min-h-screen flex items-center flex-col">
+      <section className="bg-gradient-to-br from-[#f4f2fa] via-[#e0d9f3] to-[#d1c8f0]s min-h-screen flex items-center flex-col">
         <div className="bg-gray-100 flex rounded-2xl shadow-lg max-w-3xl p-5 items-center mt-20">
           <div className="md:w-1/2 px-8 md:px-16">
             <h2 className="font-bold text-2xl text-[#7b6fb1]">Login</h2>

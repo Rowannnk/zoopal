@@ -3,6 +3,8 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import Navbar from "../components/Navbar";
+import Link from "next/link";
+import { motion } from "framer-motion";
 
 const MyPal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -66,59 +68,82 @@ const MyPal = () => {
     <>
       <Navbar />
       <hr />
-      <div className="relative min-h-screen overflow-hidden bg-white">
+      <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#f4f2fa] via-[#e0d9f3] to-[#d1c8f0]">
         <div className="relative z-10 max-w-4xl mx-auto px-6 py-20 text-[#7b6fb1]">
-          <h1 className="text-4xl font-bold mb-6 text-center">
+          <motion.h1
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-4xl font-bold mb-6 text-center"
+          >
             Thank You for Giving Them A Brighter Future!
-          </h1>
-          <p className="text-lg leading-relaxed text-center">
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-lg leading-relaxed text-center"
+          >
             At AdoptAZooPal.com, we believe in connecting our adopters with the
             animals they support. Whether here to meet your adopted animal up
             close, take a behind-the-scenes tour, or just spend some quality
             time with your new pal, we have made it easy to schedule an
             unforgettable experience.
-          </p>
+          </motion.p>
         </div>
 
         {/* Grid displaying adopted animals */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mx-20">
           {adoptedAnimals.map((animal) => (
-            <div
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
               key={animal.id}
               className="relative flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg w-100 cursor-pointer hover:shadow-xl transition-transform duration-500 transform hover:scale-105"
             >
-              {/* "See All Latest" Button */}
+              {/* Card Content */}
+              <Link href={`/pets/${animal.id}`} className="block">
+                <div className="p-4">
+                  <h6 className="mb-1 text-2xl font-bold text-[#7b6fb1]">
+                    {animal.name}
+                  </h6>
+                  <p className="text-sm font-medium text-gray-700">
+                    {animal.commonName}
+                  </p>
+                  <p
+                    className={`mt-2 px-3 py-1 rounded-full text-sm font-semibold inline-block ${
+                      animal.adoptionStatus === "Endangered"
+                        ? "bg-green-200 text-green-800"
+                        : animal.adoptionStatus === "Moderately Concerned"
+                        ? "bg-red-200 text-red-800"
+                        : "bg-gray-200 text-gray-800"
+                    }`}
+                  >
+                    {animal.adoptionStatus}
+                  </p>
+                </div>
+
+                {/* Card Image */}
+                <div className="relative h-80 m-2.5 overflow-hidden text-white rounded-md">
+                  <Image
+                    width={300}
+                    height={200}
+                    src={animal.imageUrl}
+                    alt="animal image"
+                    className="object-cover w-full h-full  rounded-md transition-transform duration-300 transform hover:scale-110"
+                  />
+                </div>
+              </Link>
+
+              {/* "See All Latest" Button - Outside of Link */}
               <button
                 onClick={() => handleAnimalLatest(animal.id)}
-                className="absolute top-6 right-4 text-sm text-[#7b6fb1] font-semibold underline transition-all duration-300 hover:text-purple-600"
+                className="absolute top-6 right-4 text-sm text-[#7b6fb1] font-semibold underline transition-all duration-300 hover:text-purple-400"
               >
                 See All Latest
               </button>
-
-              {/* Card Content */}
-              <div className="p-4">
-                <h6 className="mb-2 text-[#7b6fb1] text-xl font-semibold">
-                  {animal.commonName}
-                </h6>
-                <p className="text-slate-600 leading-normal font-light">
-                  {animal.name}
-                </p>
-                <p className="text-slate-600 leading-normal font-light">
-                  Status : {animal.adoptionStatus}
-                </p>
-              </div>
-
-              {/* Card Image */}
-              <div className="relative h-80 m-2.5 overflow-hidden text-white rounded-md">
-                <Image
-                  width={300}
-                  height={200}
-                  src={animal.imageUrl}
-                  alt="animal image"
-                  className="object-cover w-full h-full  rounded-md transition-transform duration-300 transform hover:scale-110"
-                />
-              </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
@@ -146,7 +171,7 @@ const MyPal = () => {
                   <Image
                     src={selectedAnimal.imageUrl || "/placeholder-image.png"}
                     alt={`${selectedAnimal.commonName}'s latest photo`}
-                    width={300}
+                    width={400}
                     height={300}
                     className="rounded-lg shadow-md object-cover"
                   />

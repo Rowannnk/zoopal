@@ -39,7 +39,7 @@ export default function UserList() {
   const [filterType, setFilterType] = useState("All");
 
   const filteredUsers = users.filter((user) =>
-    user.name.toLowerCase().includes(search.toLowerCase())
+    user.name.toLowerCase().includes(search.trim().toLowerCase())
   );
 
   const indexOfLastUser = currentPage * usersPerPage;
@@ -55,17 +55,19 @@ export default function UserList() {
   return (
     <>
       <Navbar />
-      <div className="w-full p-8">
-        <h2 className="text-2xl font-semibold mb-4">Users</h2>
-        <div className="relative mb-4">
-          <input
-            type="text"
-            placeholder="Search"
-            className="w-60 p-2 pl-10 border rounded"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <FaSearch className="absolute left-3 top-3 text-gray-500" />
+      <div className="w-full p-8 bg-gradient-to-br from-[#f4f2fa] via-[#e0d9f3] to-[#d1c8f0] h-screen">
+        <div className="flex justify-between items-center">
+          <h2 className="text-2xl font-semibold mb-4">Users</h2>
+          <div className="relative mb-4">
+            <input
+              type="text"
+              placeholder="Search"
+              className="w-60 p-2 pl-10 border rounded"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <FaSearch className="absolute left-3 top-3 text-gray-500" />
+          </div>
         </div>
         <div className="overflow-x-auto rounded-lg">
           <table className="w-full bg-white border rounded-lg">
@@ -116,7 +118,7 @@ export default function UserList() {
                 onClick={() => setCurrentPage(num)}
                 className={`px-3 py-1 rounded-lg ${
                   currentPage === num
-                    ? "bg-purple-200 text-purple-800"
+                    ? "bg-[#7b6fb1] text-white"
                     : "hover:bg-gray-200"
                 }`}
               >

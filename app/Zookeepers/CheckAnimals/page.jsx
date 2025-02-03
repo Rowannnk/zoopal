@@ -1,8 +1,10 @@
 "use client";
 import Navbar from "@/app/components/Navbar";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const CheckAnimals = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -102,7 +104,12 @@ const CheckAnimals = () => {
   };
 
   const handleSaveChanges = () => {
-    alert("Changes saved successfully!");
+    Swal.fire({
+      icon: "success",
+      title: "Animal Details Updated Successfully!",
+      showConfirmButton: true, // This enables the confirm button
+      confirmButtonText: "OK", // You can customize the text of the button
+    });
     // Additional logic to save changes can be added here (e.g., API call)
   };
 
@@ -110,7 +117,7 @@ const CheckAnimals = () => {
     <>
       <Navbar />
       <hr />
-      <div className="relative min-h-screen overflow-hidden bg-white">
+      <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#f4f2fa] via-[#e0d9f3] to-[#d1c8f0]">
         <div className="relative z-10 max-w-4xl mx-auto px-6 py-20 text-[#7b6fb1]">
           <h1 className="text-4xl font-bold mb-6 text-center">
             Thank You for Giving Them A Brighter Future!
@@ -127,25 +134,29 @@ const CheckAnimals = () => {
         {/* Grid displaying adopted animals */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mx-20">
           {adoptedAnimals.map((animal) => (
-            <div
+            <Link
+              href={`/pets/${animal.id}`}
               key={animal.id}
               className="relative flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg w-100 cursor-pointer hover:shadow-xl transition-transform duration-500 transform hover:scale-105"
             >
               {/* "See All Latest" Button */}
               <button
-                onClick={() => handleAnimalLatest(animal.id)}
+                onClick={(e) => {
+                  e.preventDefault(); // Prevent the Link navigation
+                  handleAnimalLatest(animal.id);
+                }}
                 className="absolute top-6 right-4 text-sm text-[#7b6fb1] font-semibold underline transition-all duration-300 hover:text-purple-600"
               >
-                See All Latest
+                Update Latest
               </button>
 
               {/* Card Content */}
               <div className="p-4">
                 <h6 className="mb-2 text-[#7b6fb1] text-xl font-semibold">
-                  {animal.commonName}
+                  {animal.name}
                 </h6>
-                <p className="text-slate-600 leading-normal font-light">
-                  {animal.species}
+                <p className="text-slate-600 leading-normal font-light ">
+                  {animal.commonName}
                 </p>
                 <p className="text-slate-600 leading-normal font-light">
                   {animal.conservationStatus}
@@ -162,7 +173,7 @@ const CheckAnimals = () => {
                   className="object-cover w-full h-full  rounded-md transition-transform duration-300 transform hover:scale-110"
                 />
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 
@@ -203,7 +214,7 @@ const CheckAnimals = () => {
                 {/* Right Column: Details */}
                 <div className="md:w-1/2 w-full">
                   <h4 className="text-lg font-semibold mb-3 text-gray-700">
-                    Has {selectedAnimal.commonName} been fed today?
+                    Has {selectedAnimal.name} been fed today?
                   </h4>
                   <ul className="space-y-2">
                     {["Lunch", "Snack", "Dinner"].map((meal) => (
@@ -223,7 +234,7 @@ const CheckAnimals = () => {
 
                   {/* Mood Input */}
                   <h4 className="text-lg font-semibold mt-5 mb-2 text-gray-700">
-                    {animal.commonName}&#39;s Mood Today
+                    {selectedAnimal.name}&#39;s Mood Today
                   </h4>
                   <input
                     type="text"
