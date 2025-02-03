@@ -588,8 +588,8 @@ const AnimalsList = () => {
                 {/* Display image preview if exists */}
                 {image ? (
                   <Image
-                    width={"100%"}
-                    height={"100%"}
+                    width={400}
+                    height={500}
                     src={image}
                     alt="Animal Preview"
                     className="h-full w-full object-cover"
