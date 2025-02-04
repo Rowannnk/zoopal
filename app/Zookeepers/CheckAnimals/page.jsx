@@ -86,8 +86,11 @@ const CheckAnimals = () => {
       [animalId]: {
         ...prevUpdates[animalId],
         fed: {
-          ...prevUpdates[animalId].fed,
-          [meal]: !prevUpdates[animalId].fed[meal],
+          ...prevUpdates[animalId]?.fed,
+          [meal]:
+            prevUpdates[animalId]?.fed?.[meal] === undefined
+              ? true
+              : !prevUpdates[animalId]?.fed?.[meal], // Toggle, but ensure it's not undefined
         },
       },
     }));
@@ -221,7 +224,10 @@ const CheckAnimals = () => {
                       <li key={meal} className="flex items-center gap-3">
                         <input
                           type="checkbox"
-                          checked={animalUpdates[selectedAnimal.id]?.fed[meal]}
+                          checked={
+                            animalUpdates[selectedAnimal.id]?.fed?.[meal] ||
+                            false
+                          } // Default to false if undefined
                           onChange={() =>
                             handleCheckboxChange(selectedAnimal.id, meal)
                           }
@@ -243,7 +249,7 @@ const CheckAnimals = () => {
                       handleMoodChange(selectedAnimal.id, e.target.value)
                     }
                     placeholder="Type in what they seem to be feeling today."
-                    className="w-full p-3 rounded-lg border border-gray-300  text-gray-700"
+                    className="w-full p-3 rounded-lg border border-gray-300 text-gray-700"
                   />
                 </div>
               </div>
