@@ -308,7 +308,7 @@ const Appointment = () => {
                     if (selectedAnimal && selectedDate) {
                       Swal.fire({
                         title: "Appointment Confirmed!",
-                        text: `You have booked an appointment with ${selectedAnimal} on ${formattedDate} at ${selectedTime}.`,
+                        text: `You have booked an appointment with ${selectedAnimal.name} on ${formattedDate} at ${selectedTime}.`,
                         icon: "success",
                         confirmButtonColor: "#7b6fb1",
                       });
