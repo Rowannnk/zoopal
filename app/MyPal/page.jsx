@@ -180,7 +180,7 @@ const MyPal = () => {
                 {/* Right Column: Details */}
                 <div className="sm:w-1/2 sm:pl-6">
                   <h4 className="text-xl font-semibold mb-4">
-                    Has {selectedAnimal.commonName} been fed today?
+                    Has {selectedAnimal.name} been fed today?
                   </h4>
                   <ul>
                     <li className="flex items-center">
@@ -203,16 +203,16 @@ const MyPal = () => {
                     </li>
                   </ul>
                   <h4 className="text-xl font-semibold mb-2 mt-5">
-                    {selectedAnimal.commonName} Mood Today
+                    {selectedAnimal.name} Mood Today
                   </h4>
                   <p className="text-gray-600 mb-4">
-                    Currently, {selectedAnimal.commonName} is feeling playful
-                    and energetic!
+                    Currently, {selectedAnimal.name} is feeling playful and
+                    energetic!
                   </p>
                   <p className="text-sm text-gray-500">
                     Fun Fact: Every animal has its own personality, so their
                     mood can change from day to day! Check back tomorrow for a
-                    new update on how {selectedAnimal.commonName} is feeling.
+                    new update on how {selectedAnimal.name} is feeling.
                   </p>
                 </div>
               </div>
