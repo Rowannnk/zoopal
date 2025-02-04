@@ -124,7 +124,7 @@ const PetDetail = () => {
     } else {
       swal({
         title: "Success!",
-        text: `You adopted ${animal.commonName}! 🎉\n${selectedOption}`,
+        text: `You adopted ${animal.name}! 🎉\n${selectedOption}`,
         icon: "success",
         buttons: ["Cancel", "OK"],
       }).then((willAdopt) => {
