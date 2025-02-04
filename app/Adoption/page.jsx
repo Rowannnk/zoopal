@@ -31,7 +31,7 @@ const Adoption = () => {
       gender: "Male",
       age: 10,
       birthdate: "2013-11-20",
-      adoptionStatus: "No Adoptive Owner",
+      adoptionStatus: "Least Concerned",
       imageUrl: "/images/african_elephant.jpg",
     },
     {
@@ -70,7 +70,7 @@ const Adoption = () => {
       gender: "Male",
       age: 8,
       birthdate: "2015-02-10",
-      adoptionStatus: "No Adoptive Owner",
+      adoptionStatus: "Least Concerned",
       imageUrl: "/images/lion.jpg",
     },
     {
@@ -174,7 +174,7 @@ const Adoption = () => {
                 className="px-4 py-2 border border-gray-300 rounded-md text-gray-800 pl-10"
               >
                 <option value="All">Filter By</option>
-                <option value="No Adoptive Owner">No Adoptive Owner</option>
+                <option value="Least Concerned">Least Concerned</option>
                 <option value="Endangered">Endangered Species</option>
                 <option value="Moderately Concerned">
                   Moderately Concerned Species

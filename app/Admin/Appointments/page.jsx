@@ -90,11 +90,28 @@ const AppointmentList = [
 export default function Appointments() {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [dateFilter, setDateFilter] = useState("");
+
   const appointmentsPerPage = 10;
 
-  const filteredAppointments = AppointmentList.filter((appointment) =>
-    appointment.animalname.toLowerCase().includes(search.toLowerCase())
-  );
+  // const filteredAppointments = AppointmentList.filter((appointment) =>
+  //   appointment.animalname.toLowerCase().includes(search.toLowerCase())
+  // );
+  const filteredAppointments = AppointmentList.filter((appointment) => {
+    const matchesSearch = appointment.animalname
+      .toLowerCase()
+      .includes(search.toLowerCase());
+
+    const appointmentDateFormatted = new Date(appointment.appointmentDate)
+      .toISOString()
+      .split("T")[0];
+
+    const matchesDate = dateFilter
+      ? appointmentDateFormatted === dateFilter
+      : true;
+
+    return matchesSearch && matchesDate;
+  });
 
   const indexOfLastAppointment = currentPage * appointmentsPerPage;
   const indexOfFirstAppointment = indexOfLastAppointment - appointmentsPerPage;
@@ -112,15 +129,24 @@ export default function Appointments() {
       <div className="w-full p-8 bg-gradient-to-br from-[#f4f2fa] via-[#e0d9f3] to-[#d1c8f0] h-screen">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-semibold">Appointments</h2>
-          <div className="relative">
+          <div className="flex items-center gap-3">
+            {/* Date Filter */}
             <input
-              type="text"
-              placeholder="Search"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="pl-8 pr-4 py-2 border rounded-lg outline-none"
+              type="date"
+              value={dateFilter}
+              onChange={(e) => setDateFilter(e.target.value)}
+              className="px-4 py-2 border rounded-lg outline-none"
             />
-            <FiSearch className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500" />
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="pl-8 pr-4 py-2 border rounded-lg outline-none"
+              />
+              <FiSearch className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500" />
+            </div>
           </div>
         </div>
         <div className="overflow-x-auto rounded-lg">

@@ -31,7 +31,7 @@ const animals = [
     gender: "Male",
     age: 10,
     birthdate: "2013-11-20",
-    adoptionStatus: "No Adoptive Owner",
+    adoptionStatus: "Least Concerned",
     imageUrl: "/images/african_elephant.jpg",
   },
   {
@@ -70,7 +70,7 @@ const animals = [
     gender: "Male",
     age: 8,
     birthdate: "2015-02-10",
-    adoptionStatus: "No Adoptive Owner",
+    adoptionStatus: "Least Concerned",
     imageUrl: "/images/lion.jpg",
   },
   {

@@ -85,7 +85,7 @@ const initialAnimals = [
     gender: "Female",
     assignedZooKeeper: "David Lee",
     birthdate: "2019-08-18",
-    status: "No adoptive owner",
+    status: "Least Concerned",
   },
   {
     id: 9,
@@ -95,7 +95,7 @@ const initialAnimals = [
     gender: "Male",
     assignedZooKeeper: "Chris Martin",
     birthdate: "2015-03-05",
-    status: "No adoptive owner",
+    status: "Least Concerned",
   },
   {
     id: 10,
@@ -115,7 +115,7 @@ const initialAnimals = [
     gender: "Male",
     assignedZooKeeper: "Frank Harris",
     birthdate: "2020-09-12",
-    status: "No adoptive owner",
+    status: "Least Concerned",
   },
   {
     id: 12,
@@ -155,7 +155,7 @@ const initialAnimals = [
     gender: "Female",
     assignedZooKeeper: "Ethan King",
     birthdate: "2011-01-19",
-    status: "No adoptive owner",
+    status: "Least Concerned",
   },
 ];
 
@@ -379,7 +379,7 @@ const AnimalsList = () => {
                           ? "bg-red-400 text-white"
                           : animal.status === "Moderately Concerned"
                           ? "bg-blue-400 text-white"
-                          : animal.status === "No adoptive owner"
+                          : animal.status === "Least Concerned"
                           ? "bg-gray-400 text-white"
                           : ""
                       }`}
@@ -488,13 +488,30 @@ const AnimalsList = () => {
                       <h2 className="text-lg font-semibold mb-3">
                         Add Common Name
                       </h2>
-                      <input
-                        type="text"
-                        className="border border-gray-300 rounded-lg p-2 w-full"
-                        placeholder="Enter new common name"
-                        value={newCommonName}
-                        onChange={(e) => setNewCommonName(e.target.value)}
-                      />
+                      <div className="flex flex-col gap-4">
+                        <input
+                          type="text"
+                          className="border border-gray-300 rounded-lg p-2 w-full"
+                          placeholder="Enter new common name"
+                          value={newCommonName}
+                          onChange={(e) => setNewCommonName(e.target.value)}
+                        />
+                        <select
+                          name="status"
+                          value={formData.status}
+                          onChange={handleDropdownChange}
+                          className="mt-1 block w-full p-1 text-sm border border-gray-300 rounded-md"
+                        >
+                          <option value="">Select Status</option>
+                          <option value="Endangered">Endangered</option>
+                          <option value="Moderately Concerned">
+                            Moderately Concerned
+                          </option>
+                          <option value="Least Concerned">
+                            Least Concerned
+                          </option>
+                        </select>{" "}
+                      </div>
                       <div className="flex justify-end gap-2 mt-4">
                         <button
                           className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm hover:bg-gray-400"
@@ -534,20 +551,7 @@ const AnimalsList = () => {
                   className="w-full mb-2 p-2 border rounded"
                 />
               </div>
-              <div className="grid grid-cols-2 gap-4 ">
-                <select
-                  name="status"
-                  value={formData.status}
-                  onChange={handleDropdownChange}
-                  className="mt-1 block w-full p-1 text-sm border border-gray-300 rounded-md"
-                >
-                  <option value="">Select Status</option>
-                  <option value="Endangered">Endangered</option>
-                  <option value="Moderately Concerned">
-                    Moderately Concerned
-                  </option>
-                  <option value="No adoptive owner">No adoptive owner</option>
-                </select>
+              <div className="grid grid-cols-1 gap-4 ">
                 <input
                   type="date"
                   name="birthdate"
