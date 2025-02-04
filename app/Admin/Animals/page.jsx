@@ -227,6 +227,57 @@ const AnimalsList = () => {
     });
   };
 
+  const calculateAge = (birthdate) => {
+    const birthDate = new Date(birthdate);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+    return age;
+  };
+
+  // const handleSave = () => {
+  //   Swal.fire({
+  //     title: selectedAnimal
+  //       ? "Are you sure you want to update this animal?"
+  //       : "Are you sure you want to add this animal?",
+  //     text: selectedAnimal
+  //       ? "Changes will be saved."
+  //       : "The animal will be added to the list.",
+  //     icon: "question",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     confirmButtonText: selectedAnimal ? "Yes, update it!" : "Yes, add it!",
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       if (selectedAnimal) {
+  //         setAnimals((prev) =>
+  //           prev.map((a) =>
+  //             a.id === selectedAnimal.id ? { ...formData, id: a.id } : a
+  //           )
+  //         );
+  //       } else {
+  //         setAnimals((prev) => [{ ...formData, id: prev.length + 1 }, ...prev]);
+  //       }
+  //       Swal.fire(
+  //         selectedAnimal ? "Updated!" : "Added!",
+  //         selectedAnimal
+  //           ? "The animal has been updated."
+  //           : "The new animal has been added.",
+  //         "success"
+  //       );
+  //       closeModal();
+  //     }
+  //   });
+  // };
+
   const handleSave = () => {
     Swal.fire({
       title: selectedAnimal
@@ -242,15 +293,24 @@ const AnimalsList = () => {
       confirmButtonText: selectedAnimal ? "Yes, update it!" : "Yes, add it!",
     }).then((result) => {
       if (result.isConfirmed) {
+        const updatedAnimal = {
+          ...formData,
+          age: calculateAge(formData.birthdate),
+        };
+
         if (selectedAnimal) {
           setAnimals((prev) =>
             prev.map((a) =>
-              a.id === selectedAnimal.id ? { ...formData, id: a.id } : a
+              a.id === selectedAnimal.id ? { ...updatedAnimal, id: a.id } : a
             )
           );
         } else {
-          setAnimals((prev) => [{ ...formData, id: prev.length + 1 }, ...prev]);
+          setAnimals((prev) => [
+            { ...updatedAnimal, id: prev.length + 1 },
+            ...prev,
+          ]);
         }
+
         Swal.fire(
           selectedAnimal ? "Updated!" : "Added!",
           selectedAnimal
@@ -262,7 +322,6 @@ const AnimalsList = () => {
       }
     });
   };
-
   const filteredAnimals = animals.filter((animal) =>
     Object.values(animal).some((value) =>
       value.toString().toLowerCase().includes(searchQuery.toLowerCase())
@@ -542,16 +601,14 @@ const AnimalsList = () => {
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
                 </select>
-                <input
+                {/* <input
                   type="number"
                   name="age"
                   value={formData.age}
                   onChange={handleInputChange}
                   placeholder="Age"
                   className="w-full mb-2 p-2 border rounded"
-                />
-              </div>
-              <div className="grid grid-cols-1 gap-4 ">
+                /> */}
                 <input
                   type="date"
                   name="birthdate"
